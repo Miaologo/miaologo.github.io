@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="christian_smile">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="iOS开发之锁">
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="45°仰望星空">
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article">
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary">
+    
+
+    <!-- Title -->
+    
+    <title>iOS开发之锁 - 45°仰望星空</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Configurable Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/klugjo/hexo-theme-clean-blog">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>iOS开发之锁</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2019-08-08
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/iOS/">#iOS</a> <a href="/tags/锁/">#锁</a> <a href="/tags/多线程/">#多线程</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>获取锁失败，线程有两种状态：</p>
+<ul>
+<li>空转状态：线程执行空任务循环等待，当锁可用时立即获取锁。</li>
+<li>挂起状态：线程挂起，当锁可用时需要其他线程唤醒。</li>
+</ul>
+<p>唤醒线程比较耗时，线程空转需要消耗 CPU 资源并且时间越长消耗越多，由此可知空转适合少量任务、挂起适合大量任务。</p>
+<p>实际上互斥锁和读写锁都有空转锁的特性，它们在获取锁失败时会先空转一段时间，然后才会挂起，而空转锁也不会永远的空转，在特定的空转时间过后仍然会挂起，所以通常情况下不用刻意去使用空转锁</p>
+<h2 id="优先级反转"><a href="#优先级反转" class="headerlink" title="优先级反转"></a>优先级反转</h2><p>简单从字面上来说，就是低优先级的任务先于高优先级的任务执行了，优先级搞反了。那在什么情况下会生这种情况呢？</p>
+<p>假设三个任务准备执行，A，B，C，优先级依次是A&gt;B&gt;C；</p>
+<p>首先：C处于运行状态，获得CPU正在执行，同时占有了某种资源；</p>
+<p>其次：A进入就绪状态，因为优先级比C高，所以获得CPU，A转为运行状态；C进入就绪状态；</p>
+<p>第三：执行过程中需要使用资源，而这个资源又被等待中的C占有的，于是A进入阻塞状态，C回到运行状态；</p>
+<p>第四：此时B进入就绪状态，因为优先级比C高，B获得CPU，进入运行状态；C又回到就绪状态；</p>
+<p>第五：如果这时又出现B2，B3等任务，他们的优先级比C高，但比A低，那么就会出现高优先级任务的A不能执行，反而低优先级的B，B2，B3等任务可以执行的奇怪现象，而这就是优先反转。</p>
+<h2 id="synchronized-obj"><a href="#synchronized-obj" class="headerlink" title="@synchronized(obj)"></a>@synchronized(obj)</h2><p><code>@synchronized(id obj){}</code>锁的是对象<code>obj</code>，使用该锁的时候，底层是对象计算出来的值作为<code>key</code>，生成一把锁，不同的资源的读写可以使用不同<code>obj</code>作为锁对象。</p>
+<h2 id="NSLock"><a href="#NSLock" class="headerlink" title="NSLock"></a>NSLock</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//协议NSLocking</span><br><span class="line">@protocol NSLocking</span><br><span class="line"></span><br><span class="line">- (void)lock;</span><br><span class="line">- (void)unlock;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface NSLock : NSObject &lt;NSLocking&gt; &#123;</span><br><span class="line">@private</span><br><span class="line">    void *_priv;</span><br><span class="line">&#125;</span><br><span class="line">- (BOOL)tryLock;//尝试加锁</span><br><span class="line">- (BOOL)lockBeforeDate:(NSDate *)limit;//在某个日期前加锁，</span><br><span class="line">@property (nullable, copy) NSString *name API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h2 id="dispatch-queue"><a href="#dispatch-queue" class="headerlink" title="dispatch_queue"></a>dispatch_queue</h2><h2 id="dispatch-semaphore"><a href="#dispatch-semaphore" class="headerlink" title="dispatch_semaphore"></a>dispatch_semaphore</h2><p><strong>dispatch_semaphore_signal</strong></p>
+<p>当我们有大量任务需要并发执行，而且同时最大并发量为5个线程，这样子又该如何控制呢？<code>dispatch_semaphore</code>信号量正好可以满足我们的需求。<code>dispatch_semaphore</code>可以控制并发线程的数量，当设置为1时，可以作为同步锁来用，设置多个的时候，就是异步并发队列</p>
+<h2 id="dispatch-barrier-async"><a href="#dispatch-barrier-async" class="headerlink" title="dispatch_barrier_async"></a>dispatch_barrier_async</h2><p>这个函数传入的并发队列必须是通过<code>dispatch_queue_create</code>创建，如果传入的是一个串行的或者全局并发队列，这个函数便等同于<code>dispatch_async</code>的效果。</p>
+<h2 id="NSRecursiveLock"><a href="#NSRecursiveLock" class="headerlink" title="NSRecursiveLock"></a>NSRecursiveLock</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)tryLock;//尝试加锁</span><br><span class="line">- (BOOL)lockBeforeDate:(NSDate *)limit;//日期前加锁</span><br></pre></td></tr></table></figure>
+<h2 id="NSConditionLock"><a href="#NSConditionLock" class="headerlink" title="NSConditionLock"></a>NSConditionLock</h2><p><code>NSConditionLock</code>是可以实现多个子线程进行线程间的依赖，A依赖于B执行完成，B依赖于C执行完毕则可以使用<code>NSConditionLock</code>来解决问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@property (readonly) NSInteger condition;//条件值</span><br><span class="line">- (void)lockWhenCondition:(NSInteger)condition;//当con为condition进行锁住</span><br><span class="line">//尝试加锁</span><br><span class="line">- (BOOL)tryLock;</span><br><span class="line">//当con为condition进行尝试锁住</span><br><span class="line">- (BOOL)tryLockWhenCondition:(NSInteger)condition;</span><br><span class="line">//当con为condition进行解锁</span><br><span class="line">- (void)unlockWithCondition:(NSInteger)condition;</span><br><span class="line">//NSDate 小余 limit进行 加锁</span><br><span class="line">- (BOOL)lockBeforeDate:(NSDate *)limit;</span><br><span class="line">//条件为condition 在limit之前进行加锁</span><br><span class="line">- (BOOL)lockWhenCondition:(NSInteger)condition beforeDate:(NSDate *)limit;</span><br></pre></td></tr></table></figure>
+<p>条件锁的使用，在<code>lockWhenCondition:(NSInteger)condition</code>的条件到达的时候才能进行正常的加锁和<code>unlockWithCondition:(NSInteger)condition</code>解锁，否则会阻塞线程。</p>
+<h2 id="NSCondition"><a href="#NSCondition" class="headerlink" title="NSCondition"></a>NSCondition</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)wait;//等待</span><br><span class="line">- (BOOL)waitUntilDate:(NSDate *)limit;</span><br><span class="line">- (void)signal;//唤醒一个线程</span><br><span class="line">- (void)broadcast;//唤醒多个线程</span><br></pre></td></tr></table></figure>
+<h2 id="pthread-mutex"><a href="#pthread-mutex" class="headerlink" title="pthread_mutex"></a>pthread_mutex</h2><p><strong>pthread_mutex_init(pthread_mutex_t * mutex,const pthread_mutexattr_t attr);</strong>初始化锁变量mutex。attr为锁属性，NULL值为默认属性。</p>
+<p><strong>pthread_mutex_lock(pthread_mutex_t*mutex);</strong>加锁</p>
+<p><strong>pthread_mutex_tylock(pthread_mutex_t*mutex);</strong>加锁，但是与2不一样的是当锁已经在使用的时候，返回为EBUSY，而不是挂起等待。</p>
+<p><strong>pthread_mutex_unlock(pthread_mutex_t*mutex);</strong>释放锁</p>
+<p><strong>pthread_mutex_destroy(pthread_mutex_t</strong>mutex);**使用完后释放</p>
+<h2 id="读写锁-pthread-rwlock"><a href="#读写锁-pthread-rwlock" class="headerlink" title="读写锁 pthread_rwlock"></a>读写锁 pthread_rwlock</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//初始化读写锁</span><br><span class="line">int pthread_rwlock_init(pthread_rwlock_t * __restrict,</span><br><span class="line">		const pthread_rwlockattr_t * _Nullable __restrict)</span><br><span class="line">//读上锁</span><br><span class="line">pthread_rwlock_rdlock(pthread_rwlock_t *)</span><br><span class="line">//尝试加锁读</span><br><span class="line">pthread_rwlock_tryrdlock(pthread_rwlock_t *)</span><br><span class="line">//尝试加锁写</span><br><span class="line">int pthread_rwlock_trywrlock(pthread_rwlock_t *)</span><br><span class="line">//写入加锁</span><br><span class="line">pthread_rwlock_wrlock(pthread_rwlock_t *)</span><br><span class="line">//解锁</span><br><span class="line">pthread_rwlock_unlock(pthread_rwlock_t *)</span><br><span class="line">//销毁锁属性</span><br><span class="line">pthread_rwlockattr_destroy(pthread_rwlockattr_t *)</span><br><span class="line">//销毁锁</span><br><span class="line">pthread_rwlock_destroy(pthread_rwlock_t * )</span><br></pre></td></tr></table></figure>
+<p><code>pthread_rwlock_t</code>使用很简单，只需要在读之前使用<code>pthread_rwlock_rdlock</code>，读完解锁<code>pthread_rwlock_unlock</code>,写入前需要加锁<code>pthread_rwlock_wrlock</code>，写入完成之后解锁<code>pthread_rwlock_unlock</code>，任务都执行完了可以选择销毁<code>pthread_rwlock_destroy</code>或者等待下次使用。</p>
+<h2 id="OSSpinLock"><a href="#OSSpinLock" class="headerlink" title="OSSpinLock"></a>OSSpinLock</h2><p><strong>OSSpinLock</strong>自旋锁，性能最高的锁。原理很简单，就是一直 <strong>do while</strong>忙等。它的缺点是当等待时会消耗大量 CPU 资源，所以它不适用于较长时间的任务。 不过最近YY大神在自己的博客<a href="https://link.juejin.im/?target=https%3A%2F%2Fblog.ibireme.com%2F2016%2F01%2F16%2Fspinlock_is_unsafe_in_ios%2F" target="_blank" rel="noopener">不再安全的 OSSpinLock</a>中说明了<strong>OSSpinLock</strong>已经不再安全，请大家谨慎使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//初始化 一般是0，或者直接数字0也是ok的。</span><br><span class="line">#define	OS_SPINLOCK_INIT    0</span><br><span class="line">//锁的初始化</span><br><span class="line">OSSpinLock lock = OS_SPINLOCK_INIT;</span><br><span class="line">//尝试加锁</span><br><span class="line">bool ret = OSSpinLockTry(&amp;lock);</span><br><span class="line">//加锁</span><br><span class="line">OSSpinLockLock(&amp;lock);</span><br><span class="line">//解锁</span><br><span class="line">OSSpinLockUnlock(&amp;lock);</span><br></pre></td></tr></table></figure>
+<h2 id="os-unfair-lock"><a href="#os-unfair-lock" class="headerlink" title="os_unfair_lock"></a>os_unfair_lock</h2><p><code>os_unfair_lock</code>被系统定义为低级锁，一般低级锁都是闲的时候在睡眠，在等待的时候被内核唤醒，目的是替换已弃用的<code>OSSpinLock</code>，而且必须使用<code>OS_UNFAIR_LOCK_INIT</code>来初始化，加锁和解锁必须在相同的线程，否则会中断进程，使用该锁需要系统在<code>__IOS_AVAILABLE(10.0)</code>，锁的数据结构是一个结构体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">OS_UNFAIR_LOCK_AVAILABILITY</span><br><span class="line">typedef struct os_unfair_lock_s &#123;</span><br><span class="line">	uint32_t _os_unfair_lock_opaque;</span><br><span class="line">&#125; os_unfair_lock, *os_unfair_lock_t;</span><br></pre></td></tr></table></figure>
+<h2 id="atomic-原子操作"><a href="#atomic-原子操作" class="headerlink" title="atomic 原子操作"></a>atomic 原子操作</h2><p>给属性添加<code>atmoic</code>修饰，可以保证属性的<code>setter</code>和<code>getter</code>都是原子性操作，也就保证了<code>setter</code>和<code>getter</code>的内部是线程同步的。 原子操作是最终调用了<code>static inline void reallySetProperty(id self, SEL _cmd, id newValue, ptrdiff_t offset, bool atomic, bool copy, bool mutableCopy) objc-accessors.mm 48行</code>，我们进入到函数内部</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">//设置属性原子操作</span><br><span class="line">void objc_setProperty_atomic(id self, SEL _cmd, id newValue, ptrdiff_t offset)</span><br><span class="line">&#123;</span><br><span class="line">    reallySetProperty(self, _cmd, newValue, offset, true, false, false);</span><br><span class="line">&#125;</span><br><span class="line">//非原子操作设置属性</span><br><span class="line">void objc_setProperty_nonatomic(id self, SEL _cmd, id newValue, ptrdiff_t offset)</span><br><span class="line">&#123;</span><br><span class="line">    reallySetProperty(self, _cmd, newValue, offset, false, false, false);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static inline void reallySetProperty(id self, SEL _cmd, id newValue, ptrdiff_t offset, bool atomic, bool copy, bool mutableCopy)</span><br><span class="line">&#123;//偏移量等于0则是class指针</span><br><span class="line">    if (offset == 0) &#123;</span><br><span class="line">        object_setClass(self, newValue);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">//其他的value</span><br><span class="line">    id oldValue;</span><br><span class="line">    id *slot = (id*) ((char*)self + offset);</span><br><span class="line"></span><br><span class="line">    if (copy) &#123;</span><br><span class="line">    //如果是copy 用copyWithZone:</span><br><span class="line">        newValue = [newValue copyWithZone:nil];</span><br><span class="line">    &#125; else if (mutableCopy) &#123;</span><br><span class="line">        //mutableCopy则调用mutableCopyWithZone:</span><br><span class="line">        newValue = [newValue mutableCopyWithZone:nil];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">    //如果赋值和原来的相等 则不操作</span><br><span class="line">        if (*slot == newValue) return;</span><br><span class="line">        newValue = objc_retain(newValue);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!atomic) &#123;//非原子操作 直接赋值</span><br><span class="line">        oldValue = *slot;</span><br><span class="line">        *slot = newValue;</span><br><span class="line">    &#125; else &#123;//原子操作 加锁</span><br><span class="line">    //锁和属性是一一对应的-&gt;自旋锁</span><br><span class="line">        spinlock_t&amp; slotlock = PropertyLocks[slot];</span><br><span class="line">        slotlock.lock();</span><br><span class="line">        oldValue = *slot;</span><br><span class="line">        *slot = newValue;//赋值</span><br><span class="line">        slotlock.unlock();//解锁</span><br><span class="line">    &#125;</span><br><span class="line">    objc_release(oldValue);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">id objc_getProperty(id self, SEL _cmd, ptrdiff_t offset, BOOL atomic) &#123;</span><br><span class="line">    if (offset == 0) &#123;</span><br><span class="line">        return object_getClass(self);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Retain release world</span><br><span class="line">    id *slot = (id*) ((char*)self + offset);</span><br><span class="line">    if (!atomic) return *slot;//非原子操作 直接返回值</span><br><span class="line">        </span><br><span class="line">    // Atomic retain release world</span><br><span class="line">	//原子操作 加锁-&gt;自旋锁</span><br><span class="line">    spinlock_t&amp; slotlock = PropertyLocks[slot];</span><br><span class="line">    slotlock.lock();//加锁</span><br><span class="line">    id value = objc_retain(*slot);</span><br><span class="line">    slotlock.unlock();//解锁</span><br><span class="line">    </span><br><span class="line">    // for performance, we (safely) issue the autorelease OUTSIDE of the spinlock.</span><br><span class="line">    return objc_autoreleaseReturnValue(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//以属性的地址为参数计算出key ，锁为value</span><br><span class="line">StripedMap&lt;spinlock_t&gt; PropertyLocks;</span><br></pre></td></tr></table></figure>
+<p>从源码了解到设置属性读取是<code>self</code>+属性的偏移量，当<code>copy</code>或<code>mutableCopy</code>会调用到<code>[newValue copyWithZone:nil]</code>或<code>[newValue mutableCopyWithZone:nil]</code>，如果新旧值相等则不进行操作，非原子操作直接赋值，原子操作则获取<code>spinlock_t&amp; slotlock = PropertyLocks[slot]</code>进行加锁、赋值、解锁操作。而且<code>PropertyLocks</code>是一个类，类有一个数组属性，使用<code>*p</code>计算出来的值作为<code>key</code>。</p>
+<p>由上面得知<code>atmoic</code>仅仅是对方法<code>setter()</code>和<code>getter()</code>安全，对成员变量不保证安全，对于属性的读写一般使用<code>nonatomic</code>，性能好，<code>atomic</code>读取频率高的时候会导致线程都在排队，浪费CPU时间</p>
+<h2 id="几种锁性能对比"><a href="#几种锁性能对比" class="headerlink" title="几种锁性能对比"></a>几种锁性能对比</h2><p>大概使用者几种锁分别对卖票功能进行了性能测试， 性能分别1万次、100万次、1000万次锁花费的时间对比，单位是秒。(仅供参考，不同环境时间略有差异)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">锁类型</th>
+<th style="text-align:center">1万次</th>
+<th style="text-align:center">100万次</th>
+<th style="text-align:center">1000万次</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">pthread_mutex_t</td>
+<td style="text-align:center">0.000309</td>
+<td style="text-align:center">0.027238</td>
+<td style="text-align:center">0.284714</td>
+</tr>
+<tr>
+<td style="text-align:center">os_unfair_lock</td>
+<td style="text-align:center">0.000274</td>
+<td style="text-align:center">0.028266</td>
+<td style="text-align:center">0.285685</td>
+</tr>
+<tr>
+<td style="text-align:center">OSSpinLock</td>
+<td style="text-align:center">0.030688</td>
+<td style="text-align:center">0.410067</td>
+<td style="text-align:center">0.437702</td>
+</tr>
+<tr>
+<td style="text-align:center">NSCondition</td>
+<td style="text-align:center">0.005067</td>
+<td style="text-align:center">0.323492</td>
+<td style="text-align:center">1.078636</td>
+</tr>
+<tr>
+<td style="text-align:center">NSLock</td>
+<td style="text-align:center">0.038692</td>
+<td style="text-align:center">0.151601</td>
+<td style="text-align:center">1.322062</td>
+</tr>
+<tr>
+<td style="text-align:center">NSRecursiveLock</td>
+<td style="text-align:center">0.007973</td>
+<td style="text-align:center">0.151601</td>
+<td style="text-align:center">1.673409</td>
+</tr>
+<tr>
+<td style="text-align:center">@synchronized</td>
+<td style="text-align:center">0.008953</td>
+<td style="text-align:center">0.640234</td>
+<td style="text-align:center">2.790291</td>
+</tr>
+<tr>
+<td style="text-align:center">NSConditionLock</td>
+<td style="text-align:center">0.229148</td>
+<td style="text-align:center">5.325272</td>
+<td style="text-align:center">10.681123</td>
+</tr>
+<tr>
+<td style="text-align:center">semaphore</td>
+<td style="text-align:center">0.094267</td>
+<td style="text-align:center">0.415351</td>
+<td style="text-align:center">24.699100</td>
+</tr>
+<tr>
+<td style="text-align:center">SerialQueue</td>
+<td style="text-align:center">0.213386</td>
+<td style="text-align:center">9.058581</td>
+<td style="text-align:center">50.820202</td>
+</tr>
+</tbody>
+</table>
+<h2 id="自旋锁-amp-互斥锁比较"><a href="#自旋锁-amp-互斥锁比较" class="headerlink" title="自旋锁&amp;互斥锁比较"></a>自旋锁&amp;互斥锁比较</h2><p>自旋锁和互斥锁各有优劣，</p>
+<ul>
+<li>代码执行频率高，CPU充足，可以使用自旋锁</li>
+<li>频率低，代码复杂则需要互斥锁。</li>
+</ul>
+<h4 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h4><ul>
+<li>自旋锁在等待时间比较短的时候比较合适</li>
+<li>临界区代码经常被调用，但竞争很少发生</li>
+<li>CPU不紧张</li>
+<li>多核处理器</li>
+</ul>
+<h4 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h4><ul>
+<li>预计线程等待时间比较长</li>
+<li>单核处理器</li>
+<li>临界区IO操作</li>
+<li>临界区代码比较多、复杂，或者循环量大</li>
+<li>临界区竞争非常激烈</li>
+</ul>
+<p>## </p>
+<p><a href="https://juejin.im/post/5d22f34de51d4555fd20a3c5" target="_blank" rel="noopener">https://juejin.im/post/5d22f34de51d4555fd20a3c5</a></p>
+<p><a href="https://juejin.im/post/5d395318f265da1b8608ca98" target="_blank" rel="noopener">https://juejin.im/post/5d395318f265da1b8608ca98</a></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/klugjo/hexo-theme-clean-blog" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 christian_smile<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="christian_smile">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="iOS Socket编程">
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="45°仰望星空">
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article">
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary">
+    
+
+    <!-- Title -->
+    
+    <title>iOS Socket编程 - 45°仰望星空</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Configurable Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/klugjo/hexo-theme-clean-blog">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>iOS Socket编程</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2019-07-24
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/iOS/">#iOS</a> <a href="/tags/socket/">#socket</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <blockquote>
+<p>版权说明，此文是在<a href="[https://elliotsomething.github.io/2015/08/29/iOS-%E4%B9%8B-Socket%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/](https://elliotsomething.github.io/2015/08/29/iOS-之-Socket学习笔记/">源文档</a>)上修改的，如有问题请联系我删除</p>
+</blockquote>
+<p>iOS App 网络请求大部分使用HTTP，也就是请求–响应这种应答式的方式。这种的话如果是比较小的项目还是蛮合适的，能够节省资源。但是比较大的项目的话就比较劣势了，而用socket就比较好，因为项目中网络请求比较多，时不时的需要发请求，socket的响应速度比HTTP要快，用户体验会要好很多。</p>
+<p>Socket其实就是tcp连接，当客户端与服务端三次握手之后就一直连着，所以他的响应速度会比HTTP的应答式快。</p>
+<h3 id="C语言-socket"><a href="#C语言-socket" class="headerlink" title="C语言 socket"></a>C语言 socket</h3><p>研究了一下C语言的socket，直接上代码，下面演示一个一对一的socket服务端对客户端的demo：</p>
+<p><strong>服务端：</strong></p>
+<ul>
+<li>首先是sockaddr_in 这个结构体是用来保存socket地址的，具体参数基本看得懂</li>
+<li>接下来是创建socket，使用的是socket()这个API创建的，具体参数以后在讲</li>
+<li>然后是socket绑定地址也就是刚刚创建的sockaddr_in这个结构体，用bind()这个API绑定</li>
+<li>接下来是监听这个socket了，用listen()这个API，注意监听的socket是只用来监听的，不能用来读写数据</li>
+<li>监听之后就是新建一个socket用来读写数据了，用accept()这个API</li>
+<li>最后就是读写数据嘛，分别用send()，recv()者两个API</li>
+</ul>
+<p><strong>代码如下：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* C语言 socket */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">server_addr</span>;</span></span><br><span class="line">server_addr.sin_len = <span class="keyword">sizeof</span>(struct sockaddr_in);</span><br><span class="line">server_addr.sin_family = AF_INET;<span class="comment">//Address families AF_INET互联网地址簇 	</span></span><br><span class="line">server_addr.sin_port = htons(<span class="number">11332</span>);</span><br><span class="line">server_addr.sin_addr.s_addr = inet_addr(<span class="string">"127.0.0.1"</span>);</span><br><span class="line">bzero(&amp;(server_addr.sin_zero),<span class="number">8</span>);</span><br><span class="line"><span class="comment">//创建socket 	</span></span><br><span class="line"><span class="keyword">int</span> server_socket = socket(AF_INET, SOCK_STREAM, <span class="number">0</span>);</span><br><span class="line"><span class="comment">//SOCK_STREAM 有连接 	</span></span><br><span class="line"><span class="keyword">if</span> (server_socket == <span class="number">-1</span>) &#123;</span><br><span class="line">		perror(<span class="string">"socket error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//绑定socket：将创建的socket绑定到本地的IP地址和端口，此socket是半相关的，只是负责侦听客户端的连接请求，并不能用于和客户端通信 	</span></span><br><span class="line"> <span class="keyword">int</span> bind_result = bind(server_socket, (struct sockaddr *)&amp;server_addr, <span class="keyword">sizeof</span>(server_addr));</span><br><span class="line"><span class="keyword">if</span> (bind_result == <span class="number">-1</span>) &#123;</span><br><span class="line">		perror(<span class="string">"bind error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">	<span class="comment">//listen侦听 第一个参数是套接字，第二个参数为等待接受的连接的队列的大小，在connect请求过来的时候,完成三次握手后先将连接放到这个队列中，直到被accept处理。如果这个队列满了，且有新的连接的时候，对方可能会收到出错信息。 	</span></span><br><span class="line"><span class="keyword">if</span> (listen(server_socket, <span class="number">5</span>) == <span class="number">-1</span>) &#123;</span><br><span class="line">		perror(<span class="string">"listen error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">client_address</span>;</span></span><br><span class="line"><span class="keyword">socklen_t</span> address_len;</span><br><span class="line"><span class="keyword">int</span> client_socket = accept(server_socket, (struct sockaddr *)&amp;client_address, &amp;address_len);</span><br><span class="line">	<span class="comment">//返回的client_socket为一个全相关的socket，其中包含client的地址和端口信息，通过client_socket可以和客户端进行通信。 	</span></span><br><span class="line"><span class="keyword">if</span> (client_socket == <span class="number">-1</span>) &#123;</span><br><span class="line">		perror(<span class="string">"accept error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">char</span> recv_msg[<span class="number">1024</span>];</span><br><span class="line"><span class="keyword">char</span> reply_msg[<span class="number">1024</span>];</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">		bzero(recv_msg, <span class="number">1024</span>);</span><br><span class="line">		bzero(reply_msg, <span class="number">1024</span>);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"reply:"</span>);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%s"</span>,reply_msg);</span><br><span class="line">		send(client_socket, reply_msg, <span class="number">1024</span>, <span class="number">0</span>);</span><br><span class="line">		<span class="keyword">long</span> byte_num = recv(client_socket,recv_msg,<span class="number">1024</span>,<span class="number">0</span>);</span><br><span class="line">		recv_msg[byte_num] = <span class="string">'\0'</span>;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"client said:%s\n"</span>,recv_msg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>客户端：</strong></p>
+<ul>
+<li>基本步骤和服务端一样，</li>
+<li>首先保存创建socket地址，不同的是客户端需要写服务端的IP地址</li>
+<li>然后是创建socket，绑定地址</li>
+<li>接下来和服务端不同，需要连接服务端，所以用到connect()这个API来连接服务端</li>
+<li>连接之后就是读写数据了</li>
+</ul>
+<p><strong>代码如下：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* C语言 socket */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">server_addr</span>;</span></span><br><span class="line">	server_addr.sin_len = <span class="keyword">sizeof</span>(struct sockaddr_in);</span><br><span class="line">	server_addr.sin_family = AF_INET;</span><br><span class="line">	server_addr.sin_port = htons(<span class="number">11332</span>);</span><br><span class="line">	server_addr.sin_addr.s_addr = inet_addr(<span class="string">"127.0.0.1"</span>);</span><br><span class="line">	bzero(&amp;(server_addr.sin_zero),<span class="number">8</span>);</span><br><span class="line">	<span class="keyword">int</span> server_socket = socket(AF_INET, SOCK_STREAM, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span> (server_socket == <span class="number">-1</span>) &#123;</span><br><span class="line">		perror(<span class="string">"socket error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">char</span> recv_msg[<span class="number">1024</span>];</span><br><span class="line">	<span class="keyword">char</span> reply_msg[<span class="number">1024</span>];</span><br><span class="line">	<span class="keyword">if</span> (connect(server_socket, (struct sockaddr *)&amp;server_addr, <span class="keyword">sizeof</span>(struct sockaddr_in))==<span class="number">0</span>)     &#123;</span><br><span class="line">		<span class="comment">//connect 成功之后，其实系统将你创建的socket绑定到一个系统分配的端口上，且其为全相关，包含服务器端的信息，可以用来和服务器端进行通信。 		</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">			bzero(recv_msg, <span class="number">1024</span>);</span><br><span class="line">			bzero(reply_msg, <span class="number">1024</span>);</span><br><span class="line">			<span class="keyword">long</span> byte_num = recv(server_socket,recv_msg,<span class="number">1024</span>,<span class="number">0</span>);</span><br><span class="line">			recv_msg[byte_num] = <span class="string">'\0'</span>;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"server said:%s\n"</span>,recv_msg);</span><br><span class="line"></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"reply:"</span>);</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%s"</span>,reply_msg);</span><br><span class="line">			<span class="keyword">if</span> (send(server_socket, reply_msg, <span class="number">1024</span>, <span class="number">0</span>) == <span class="number">-1</span>) &#123;</span><br><span class="line">				perror(<span class="string">"send error"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="OC的socket"><a href="#OC的socket" class="headerlink" title="OC的socket"></a>OC的socket</h3><p>上面讲的是C语言的socket，下面来讲一下OC的socket，其实很多都是C的，不过是对其进行了一层封装</p>
+<p><strong>首先服务端：</strong></p>
+<ul>
+<li>基本步骤和C语言的一样</li>
+<li>创建socket用的是CFSocketCreate()；基本参数见代码</li>
+<li>然后是创建保存地址</li>
+<li>然后是绑定地址，用的是CFSocketSetAddress()这个API</li>
+<li>然后就是和C语言不同的地方了，OC由于有runloop，不向C语言一样需要自己写一个死循环，所以需要将socket加入runloop中去，不断的监听</li>
+<li>接下来是回调，这个是在创建socket的时候绑定的回调，同样需要重新创建一个socket来管理数据的读写，不过OC可以直接交给CFSocketNativeHandle这个类去处理，同样的数据流也有CFStream这个类去处理，他的子类可以分别管理读写流</li>
+</ul>
+<p><strong>代码如下：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line">-(int)setupSocket</span><br><span class="line">&#123;</span><br><span class="line">	CFSocketContext sockContext = &#123;0, // 结构体的版本，必须为0 		(__bridge void *)(self),</span><br><span class="line">		NULL, // 一个定义在上面指针中的retain的回调， 可以为NULL 		NULL,</span><br><span class="line">		NULL&#125;;</span><br><span class="line">	_socket = CFSocketCreate(kCFAllocatorDefault, // 为新对象分配内存，可以为nil 	</span><br><span class="line">                           PF_INET, // 协议族，如果为0或者负数，则默认为PF_INET 				</span><br><span class="line">                           SOCK_STREAM, // 套接字类型，如果协议族为PF_INET,则它会默认为SOCK_STREAM </span><br><span class="line">                           IPPROTO_TCP, // 套接字协议，如果协议族是PF_INET且协议是0或者负数，它会默认为IPPROTO_TCP 							 </span><br><span class="line">                           kCFSocketAcceptCallBack, // 触发回调函数的socket消息类型，具体见Callback Types 							 </span><br><span class="line">                           SocketConnectionAcceptedCallBack, // 上面情况下触发的回调函数 							 &amp;sockContext // 一个持有CFSocket结构信息的对象，可以为nil 							 </span><br><span class="line">                          );</span><br><span class="line">	if (NULL == _socket) &#123;</span><br><span class="line">		NSLog(@&quot;Cannot create socket!&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	int optval = 1;</span><br><span class="line">	setsockopt(CFSocketGetNative(_socket), SOL_SOCKET, SO_REUSEADDR, // 允许重用本地地址和端口 			   (void *)&amp;optval, sizeof(optval));</span><br><span class="line">	struct sockaddr_in addr4;</span><br><span class="line">	memset(&amp;addr4, 0, sizeof(addr4));</span><br><span class="line">	addr4.sin_len = sizeof(addr4);</span><br><span class="line">	addr4.sin_family = AF_INET;</span><br><span class="line">	addr4.sin_port = htons(8080);</span><br><span class="line">	addr4.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">	CFDataRef address = CFDataCreate(kCFAllocatorDefault, (UInt8 *)&amp;addr4, sizeof(addr4));</span><br><span class="line">	if (kCFSocketSuccess != CFSocketSetAddress(_socket, address))</span><br><span class="line">	&#123;</span><br><span class="line">		NSLog(@&quot;Bind to address failed!&quot;);</span><br><span class="line">		if (_socket)</span><br><span class="line">			CFRelease(_socket);</span><br><span class="line">		_socket = NULL;</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	CFRunLoopRef cfRunLoop = CFRunLoopGetCurrent();</span><br><span class="line">	CFRunLoopSourceRef source = CFSocketCreateRunLoopSource(kCFAllocatorDefault, _socket, 0);</span><br><span class="line">	CFRunLoopAddSource(cfRunLoop, source, kCFRunLoopCommonModes);</span><br><span class="line">	CFRunLoopRun();</span><br><span class="line">	CFRelease(source);</span><br><span class="line">	return 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//回调 </span><br><span class="line">static void SocketConnectionAcceptedCallBack(CFSocketRef socket,</span><br><span class="line">											 CFSocketCallBackType type,</span><br><span class="line">											 CFDataRef address,</span><br><span class="line">											 const void *data, void *info) &#123;</span><br><span class="line">	if (kCFSocketAcceptCallBack == type)</span><br><span class="line">	&#123;</span><br><span class="line">		// 本地套接字句柄 		</span><br><span class="line">    CFSocketNativeHandle nativeSocketHandle = *(CFSocketNativeHandle *)data;</span><br><span class="line">		uint8_t name[SOCK_MAXADDRLEN];</span><br><span class="line">		socklen_t nameLen = sizeof(name);</span><br><span class="line">		if (0 != getpeername(nativeSocketHandle, (struct sockaddr *)name, &amp;nameLen)) &#123;</span><br><span class="line">			NSLog(@&quot;error&quot;);</span><br><span class="line">			exit(1);</span><br><span class="line">		&#125;</span><br><span class="line">		CFReadStreamRef iStream;</span><br><span class="line">		CFWriteStreamRef oStream;</span><br><span class="line">		// 创建一个可读写的socket连接 		</span><br><span class="line">    CFStreamCreatePairWithSocket(kCFAllocatorDefault, nativeSocketHandle, &amp;iStream, &amp;oStream);</span><br><span class="line">		if (iStream &amp;&amp; oStream)</span><br><span class="line">		&#123;</span><br><span class="line">			CFStreamClientContext streamContext = &#123;0, info, NULL, NULL&#125;;</span><br><span class="line">			if (!CFReadStreamSetClient(iStream, kCFStreamEventHasBytesAvailable,readStream, &amp;streamContext))</span><br><span class="line">			&#123;</span><br><span class="line">				exit(1);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			if (!CFWriteStreamSetClient(oStream, kCFStreamEventCanAcceptBytes, writeStream, &amp;streamContext))</span><br><span class="line">			&#123;</span><br><span class="line">				exit(1);</span><br><span class="line">			&#125;</span><br><span class="line">			CFReadStreamScheduleWithRunLoop(iStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);</span><br><span class="line">			CFWriteStreamScheduleWithRunLoop(oStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);</span><br><span class="line">			CFReadStreamOpen(iStream);</span><br><span class="line">			CFWriteStreamOpen(oStream);</span><br><span class="line">		&#125; else</span><br><span class="line">		&#123;</span><br><span class="line">			close(nativeSocketHandle);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">// 读取数据 </span><br><span class="line">void readStream(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo)</span><br><span class="line">&#123;</span><br><span class="line">	UInt8 buff[1024*4];</span><br><span class="line"></span><br><span class="line">	NSMutableData *recvData = [NSMutableData data];</span><br><span class="line"></span><br><span class="line">	while (1) &#123;</span><br><span class="line">		CFIndex count = CFReadStreamRead(stream, buff, 1024*4);</span><br><span class="line">		if (count==0 || count == -1) &#123;</span><br><span class="line"></span><br><span class="line">		&#125;else&#123;</span><br><span class="line">			[recvData appendBytes:buff length:count];</span><br><span class="line">			if (!CFReadStreamHasBytesAvailable(stream)) &#123;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	NSString *recvString = [[NSString alloc]initWithData:recvData encoding:NSUTF8StringEncoding];</span><br><span class="line">	///根据delegate显示到主界面去 	NSString *strMsg = [[NSString alloc]initWithFormat:@&quot;客户端传来消息：%@&quot;,recvString];</span><br><span class="line">//	CSocketServer *info = (__bridge CSocketServer*)clientCallBackInfo; //	[info ShowMsgOnMainPage:strMsg]; 	NSLog(@&quot;%@&quot;,strMsg);</span><br><span class="line"></span><br><span class="line">//	char *str = &quot;你好 Client&quot;; 	NSString *string = @&quot;你好 Client\n&quot;;</span><br><span class="line">	NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line">	NSMutableData *data1 = [NSMutableData dataWithData:data];</span><br><span class="line">//	uint8_t * uin8b = (uint8_t *)str; 	const uint8_t * uin8b = data1.bytes;</span><br><span class="line">	if (outputStream != NULL)</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		while (1) &#123;</span><br><span class="line">			if (data1.length&gt;0 &amp;&amp; CFWriteStreamCanAcceptBytes(outputStream)) &#123;</span><br><span class="line">				CFIndex writeLength = CFWriteStreamWrite(outputStream, uin8b, data1.length);</span><br><span class="line"></span><br><span class="line">				if (writeLength == 0 || writeLength == -1) &#123;</span><br><span class="line"></span><br><span class="line">				&#125;else&#123;</span><br><span class="line">					[data1 replaceBytesInRange:NSMakeRange(0, writeLength) withBytes:NULL length:0];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;else&#123;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		NSLog(@&quot;Cannot send data!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void writeStream (CFWriteStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo)</span><br><span class="line">&#123;</span><br><span class="line">	outputStream = stream;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>客户端：</strong> 步骤和服务端差不多,直接上代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">-(void)CreateConnect:(NSString*)strAddress</span><br><span class="line">&#123;</span><br><span class="line">	CFSocketContext sockContext = &#123;0, // 结构体的版本，必须为0 		(__bridge void *)(self),</span><br><span class="line">		NULL, // 一个定义在上面指针中的retain的回调， 可以为NULL 		NULL,</span><br><span class="line">		NULL&#125;;</span><br><span class="line">	_socket = CFSocketCreate(kCFAllocatorDefault, // 为新对象分配内存，可以为nil 							 PF_INET, // 协议族，如果为0或者负数，则默认为PF_INET 							 SOCK_STREAM, // 套接字类型，如果协议族为PF_INET,则它会默认为SOCK_STREAM 							 IPPROTO_TCP, // 套接字协议，如果协议族是PF_INET且协议是0或者负数，它会默认为IPPROTO_TCP 							 kCFSocketConnectCallBack, // 触发回调函数的socket消息类型，具体见Callback Types 							 TCPClientConnectCallBack, // 上面情况下触发的回调函数 							 &amp;sockContext // 一个持有CFSocket结构信息的对象，可以为nil 							 );</span><br><span class="line">	if(_socket != NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		struct sockaddr_in addr4;   // IPV4 		memset(&amp;addr4, 0, sizeof(addr4));</span><br><span class="line">		addr4.sin_len = sizeof(addr4);</span><br><span class="line">		addr4.sin_family = AF_INET;</span><br><span class="line">		addr4.sin_port = htons(8080);</span><br><span class="line">		addr4.sin_addr.s_addr = inet_addr([strAddress UTF8String]);  // 把字符串的地址转换为机器可识别的网络地址 </span><br><span class="line">		// 把sockaddr_in结构体中的地址转换为Data 		CFDataRef address = CFDataCreate(kCFAllocatorDefault, (UInt8 *)&amp;addr4, sizeof(addr4));</span><br><span class="line">		CFSocketConnectToAddress(_socket, // 连接的socket 								 address, // CFDataRef类型的包含上面socket的远程地址的对象 								 -1  // 连接超时时间，如果为负，则不尝试连接，而是把连接放在后台进行，如果_socket消息类型为kCFSocketConnectCallBack，将会在连接成功或失败的时候在后台触发回调函数 								 );</span><br><span class="line">		CFRunLoopRef cRunRef = CFRunLoopGetCurrent();    // 获取当前线程的循环 		// 创建一个循环，但并没有真正加如到循环中，需要调用CFRunLoopAddSource 		CFRunLoopSourceRef sourceRef = CFSocketCreateRunLoopSource(kCFAllocatorDefault, _socket, 0);</span><br><span class="line">		CFRunLoopAddSource(cRunRef, // 运行循环 						   sourceRef,  // 增加的运行循环源, 它会被retain一次 						   kCFRunLoopCommonModes  // 增加的运行循环源的模式 						   );</span><br><span class="line">		CFRelease(sourceRef);</span><br><span class="line">		NSLog(@&quot;connect ok&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">// socket回调函数，同客户端 static void TCPClientConnectCallBack(CFSocketRef socket, CFSocketCallBackType type, CFDataRef address, const void *data, void *info)</span><br><span class="line">&#123;</span><br><span class="line">	if (kCFSocketAcceptCallBack == type)</span><br><span class="line">	&#123;</span><br><span class="line">		// 本地套接字句柄 		CFSocketNativeHandle nativeSocketHandle = *(CFSocketNativeHandle *)data;</span><br><span class="line">		uint8_t name[SOCK_MAXADDRLEN];</span><br><span class="line">		socklen_t nameLen = sizeof(name);</span><br><span class="line">		if (0 != getpeername(nativeSocketHandle, (struct sockaddr *)name, &amp;nameLen)) &#123;</span><br><span class="line">			NSLog(@&quot;error&quot;);</span><br><span class="line">			exit(1);</span><br><span class="line">		&#125;</span><br><span class="line">		CFReadStreamRef iStream;</span><br><span class="line">		CFWriteStreamRef oStream;</span><br><span class="line">		// 创建一个可读写的socket连接 		CFStreamCreatePairWithSocket(kCFAllocatorDefault, nativeSocketHandle, &amp;iStream, &amp;oStream);</span><br><span class="line">		if (iStream &amp;&amp; oStream)</span><br><span class="line">		&#123;</span><br><span class="line">			CFStreamClientContext streamContext = &#123;0, info, NULL, NULL&#125;;</span><br><span class="line">			if (!CFReadStreamSetClient(iStream, kCFStreamEventHasBytesAvailable,readStream, &amp;streamContext))</span><br><span class="line">			&#123;</span><br><span class="line">				exit(1);</span><br><span class="line">			&#125;</span><br><span class="line">			if (!CFWriteStreamSetClient(oStream, kCFStreamEventCanAcceptBytes, writeStream, &amp;streamContext))</span><br><span class="line">			&#123;</span><br><span class="line">				exit(1);</span><br><span class="line">			&#125;</span><br><span class="line">			CFReadStreamScheduleWithRunLoop(iStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);</span><br><span class="line">			CFWriteStreamScheduleWithRunLoop(oStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);</span><br><span class="line">			CFReadStreamOpen(iStream);</span><br><span class="line">			CFWriteStreamOpen(oStream);</span><br><span class="line">		&#125; else</span><br><span class="line">		&#123;</span><br><span class="line">			close(nativeSocketHandle);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 读取数据 void readStream(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo)</span><br><span class="line">&#123;</span><br><span class="line">	UInt8 buff[1024*4];</span><br><span class="line"></span><br><span class="line">	NSMutableData *recvData = [NSMutableData data];</span><br><span class="line"></span><br><span class="line">	while (1) &#123;</span><br><span class="line">		CFIndex count = CFReadStreamRead(stream, buff, 1024*4);</span><br><span class="line">		if (count==0 || count == -1) &#123;</span><br><span class="line"></span><br><span class="line">		&#125;else&#123;</span><br><span class="line">			[recvData appendBytes:buff length:count];</span><br><span class="line">			if (!CFReadStreamHasBytesAvailable(stream)) &#123;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	NSString *recvString = [[NSString alloc]initWithData:recvData encoding:NSUTF8StringEncoding];</span><br><span class="line">	///根据delegate显示到主界面去 	NSString *strMsg = [[NSString alloc]initWithFormat:@&quot;客户端传来消息：%@&quot;,recvString];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	//	CSocketServer *info = (__bridge CSocketServer*)clientCallBackInfo; 	//	[info ShowMsgOnMainPage:strMsg]; 	NSLog(@&quot;%@&quot;,strMsg);</span><br><span class="line"></span><br><span class="line">	//	char *str = &quot;你好 Client&quot;; 	NSString *string = @&quot;你好 Client\n&quot;;</span><br><span class="line">	NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	NSMutableData *data1 = [NSMutableData dataWithData:data];</span><br><span class="line">	//	uint8_t * uin8b = (uint8_t *)str; 	const uint8_t * uin8b = data1.bytes;</span><br><span class="line">	if (outputStream != NULL)</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		while (1) &#123;</span><br><span class="line">			if (data1.length&gt;0 &amp;&amp; CFWriteStreamCanAcceptBytes(outputStream)) &#123;</span><br><span class="line">				CFIndex writeLength = CFWriteStreamWrite(outputStream, uin8b, data1.length);</span><br><span class="line"></span><br><span class="line">				if (writeLength == 0 || writeLength == -1) &#123;</span><br><span class="line"></span><br><span class="line">				&#125;else&#123;</span><br><span class="line">					[data1 replaceBytesInRange:NSMakeRange(0, writeLength) withBytes:NULL length:0];</span><br><span class="line"></span><br><span class="line">				&#125;</span><br><span class="line">			&#125;else&#123;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		NSLog(@&quot;Cannot send data!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void writeStream (CFWriteStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo)</span><br><span class="line">&#123;</span><br><span class="line">	outputStream = stream;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="AsycSocket浅析"><a href="#AsycSocket浅析" class="headerlink" title="AsycSocket浅析"></a>AsycSocket浅析</h3><p>Socket基本就是这样了，还有一个牛人封装好的一个socket，用起来确实简单多了，不过坏处是有很多不需要的代码，所以需要自己去优化，也直接上代码吧：</p>
+<p><strong>服务端：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">-(void)start&#123;</span><br><span class="line">	asyncSocket = [[AsyncSocket alloc] initWithDelegate:self];</span><br><span class="line">	NSError *err = nil;</span><br><span class="line">	if (![asyncSocket acceptOnPort:8080 error:&amp;err]) &#123;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	NSLog(@&quot;开始监听&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)newSocket</span><br><span class="line">&#123;</span><br><span class="line">	NSLog(@&quot;%s&quot;, __func__);</span><br><span class="line">	self.clientAsycSocket = newSocket;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">- (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port&#123;</span><br><span class="line">	NSLog(@&quot;%s&quot;,__func__);</span><br><span class="line"></span><br><span class="line">	[sock readDataWithTimeout:-1 tag:0];</span><br><span class="line"></span><br><span class="line">	NSData *aData=[@&quot;Hi there server&quot; dataUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line">	[sock writeData:aData withTimeout:-1 tag:0];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//读取数据 -(void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag</span><br><span class="line">&#123;</span><br><span class="line">	NSString *aStr=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];</span><br><span class="line">	NSLog(@&quot;aStr==%@&quot;,aStr);</span><br><span class="line">&#125;</span><br><span class="line">//是否加密 -(void)onSocketDidSecure:(AsyncSocket *)sock</span><br><span class="line">&#123;</span><br><span class="line">	NSLog(@&quot;onSocket:%p did go a secure line:YES&quot;,sock);</span><br><span class="line">&#125;</span><br><span class="line">//遇到错误时关闭连接 -(void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err</span><br><span class="line">&#123;</span><br><span class="line">	NSLog(@&quot;onSocket:%p will disconnect with error:%@&quot;,sock,err);</span><br><span class="line">&#125;</span><br><span class="line">//断开连接 -(void)onSocketDidDisconnect:(AsyncSocket *)sock</span><br><span class="line">&#123;</span><br><span class="line">	NSLog(@&quot;onSocketDidDisconnect:%p&quot;,sock);</span><br><span class="line">&#125;</span><br><span class="line">- (void )dealloc</span><br><span class="line">&#123;</span><br><span class="line">	NSLog(@&quot;%s&quot;, __func__);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>客户端代码：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">-(void)start&#123;</span><br><span class="line">	asyncSocket = [[AsyncSocket alloc] initWithDelegate:self];</span><br><span class="line">	NSError *err = nil;</span><br><span class="line">	if(![asyncSocket connectToHost:@&quot;127.0.0.1&quot; onPort:8080 error:&amp;err])</span><br><span class="line">	&#123;</span><br><span class="line">		NSLog(@&quot;Error: %@&quot;, err);</span><br><span class="line">	&#125;</span><br><span class="line">//	NSData *aData=[@&quot;Hi there&quot; dataUsingEncoding:NSUTF8StringEncoding]; //	[asyncSocket writeData:aData withTimeout:-1 tag:0]; &#125;</span><br><span class="line"></span><br><span class="line">//建立连接 -(void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port</span><br><span class="line">&#123;</span><br><span class="line">	NSLog(@&quot;onScoket:%p did connecte to host:%@ on port:%d&quot;,sock,host,port);</span><br><span class="line"></span><br><span class="line">//	NSData *aData=[@&quot;Hi there&quot; dataUsingEncoding:NSUTF8StringEncoding]; //	[sock writeData:aData withTimeout:-1 tag:0]; 	[sock readDataWithTimeout:-1 tag:0];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//读取数据 -(void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag</span><br><span class="line">&#123;</span><br><span class="line">	NSString *aStr=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];</span><br><span class="line">	NSLog(@&quot;aStr==%@&quot;,aStr);</span><br><span class="line">	NSData *aData=[@&quot;Hi there&quot; dataUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line">	[sock writeData:aData withTimeout:-1 tag:0];</span><br><span class="line">	[sock readDataWithTimeout:-1 tag:0];</span><br><span class="line">&#125;</span><br><span class="line">//是否加密 -(void)onSocketDidSecure:(AsyncSocket *)sock</span><br><span class="line">&#123;</span><br><span class="line">	NSLog(@&quot;onSocket:%p did go a secure line:YES&quot;,sock);</span><br><span class="line">&#125;</span><br><span class="line">//遇到错误时关闭连接 -(void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err</span><br><span class="line">&#123;</span><br><span class="line">	NSLog(@&quot;onSocket:%p will disconnect with error:%@&quot;,sock,err);</span><br><span class="line">&#125;</span><br><span class="line">//断开连接 -(void)onSocketDidDisconnect:(AsyncSocket *)sock</span><br><span class="line">&#123;</span><br><span class="line">	NSLog(@&quot;onSocketDidDisconnect:%p&quot;,sock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好啦，Socket学习笔记到此结束。 <a href="https://github.com/Elliotsomething/socketDemo" target="_blank" rel="noopener">demo在此Github</a></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/klugjo/hexo-theme-clean-blog" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 christian_smile<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

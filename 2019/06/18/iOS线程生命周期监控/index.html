@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="christian_smile">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="iOS线程生命周期监控">
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="45°仰望星空">
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article">
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary">
+    
+
+    <!-- Title -->
+    
+    <title>iOS线程生命周期监控 - 45°仰望星空</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Configurable Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/klugjo/hexo-theme-clean-blog">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>iOS线程生命周期监控</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2019-06-18
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>iOS系统通过Core Services层的Foundation框架提供基于OC语言的NSThread和NSOperationQueue类来实现对线程和线程池的管理和使用。同时也提供了一套基于C语言的GCD线程池函数库来支持多线程的处理应用。这些高级的线程类或者函数的内部实现大部分最终都会调用POSIX标准中的pthread线程库中的pthread_xxx系列函数(#include &lt;pthread.h&gt;)来完成线程的创建、运行、暂停、恢复、销毁、结束等操作。用户态下的线程创建通过系统调用到达内核态的BSD层并创建bsdthread对象，而BSD层则调用Mach层的ksthread对象来完成最终线程的创建和调度的</p>
+<p><img src="/Users/miaoliu/Library/Application Support/typora-user-images/image-20190619103815599.png" alt="image-20190619103815599"></p>
+<p>pthread库中除了提供一系列标准的线程操作API外，还提供了一个用于监控线程创建、运行、结束、销毁的函数。这个函数定义在头文件<code>#include &lt;pthread/introspection.h&gt;</code>中，具体的头文件路径如下：</p>
+<p><img src="/Users/miaoliu/Library/Application Support/typora-user-images/image-20190619103909276.png" alt="image-20190619103909276"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment"> * @header</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @abstract</span></span><br><span class="line"><span class="comment"> * Introspection API for libpthread.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This should only be used for introspection and debugging tools.  Do not rely</span></span><br><span class="line"><span class="comment"> * on it in shipping code.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">__BEGIN_DECLS</span><br><span class="line"></span><br><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment"> * @typedef pthread_introspection_hook_t</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @abstract</span></span><br><span class="line"><span class="comment"> * A function pointer called at various points in a PThread's lifetime.  The</span></span><br><span class="line"><span class="comment"> * function must be able to be called in contexts with invalid thread state.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param event</span></span><br><span class="line"><span class="comment"> * One of the events in pthread_introspection_event_t.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param thread</span></span><br><span class="line"><span class="comment"> * pthread_t associated with the event.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param addr</span></span><br><span class="line"><span class="comment"> * Address associated with the event, e.g. stack address.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param size</span></span><br><span class="line"><span class="comment"> * Size associated with the event, e.g. stack size.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*<span class="keyword">pthread_introspection_hook_t</span>)</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> event,</span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="keyword">pthread_t</span> thread, <span class="keyword">void</span> *addr, <span class="keyword">size_t</span> size)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment"> * @enum pthread_introspection_event_t</span></span><br><span class="line"><span class="comment"> * Events sent by libpthread about threads lifetimes.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @const PTHREAD_INTROSPECTION_THREAD_CREATE</span></span><br><span class="line"><span class="comment"> * The specified pthread_t was created, and there will be a paired</span></span><br><span class="line"><span class="comment"> * PTHREAD_INTROSPECTION_THREAD_DESTROY event. However, there may not be</span></span><br><span class="line"><span class="comment"> * a START/TERMINATE pair of events for this pthread_t.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Starting with macOS 10.14, and iOS 12, this event is always sent before</span></span><br><span class="line"><span class="comment"> * PTHREAD_INTROSPECTION_THREAD_START is sent. This event is however not sent</span></span><br><span class="line"><span class="comment"> * for the main thread.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This event may not be sent from the context of the passed in pthread_t.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Note that all properties of this thread may not be functional yet, and it is</span></span><br><span class="line"><span class="comment"> * not permitted to call functions on this thread past observing its address.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @const PTHREAD_INTROSPECTION_THREAD_START</span></span><br><span class="line"><span class="comment"> * Thread has started and its stack was allocated. There will be a matching</span></span><br><span class="line"><span class="comment"> * PTHREAD_INTROSPECTION_THREAD_TERMINATE event.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This event is always sent from the context of the passed in pthread_t.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @const PTHREAD_INTROSPECTION_THREAD_TERMINATE</span></span><br><span class="line"><span class="comment"> * Thread is about to be terminated and stack will be deallocated. This always</span></span><br><span class="line"><span class="comment"> * matches a PTHREAD_INTROSPECTION_THREAD_START event.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This event is always sent from the context of the passed in pthread_t.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @const PTHREAD_INTROSPECTION_THREAD_DESTROY</span></span><br><span class="line"><span class="comment"> * pthread_t is about to be destroyed. This always matches</span></span><br><span class="line"><span class="comment"> * a PTHREAD_INTROSPECTION_THREAD_CREATE event, but there may not have been</span></span><br><span class="line"><span class="comment"> * a START/TERMINATE pair of events for this pthread_t.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This event may not be sent from the context of the passed in pthread_t.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">enum</span> &#123;</span><br><span class="line">	PTHREAD_INTROSPECTION_THREAD_CREATE = <span class="number">1</span>,</span><br><span class="line">	PTHREAD_INTROSPECTION_THREAD_START,</span><br><span class="line">	PTHREAD_INTROSPECTION_THREAD_TERMINATE,</span><br><span class="line">	PTHREAD_INTROSPECTION_THREAD_DESTROY,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment"> * @function pthread_introspection_hook_install</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @abstract</span></span><br><span class="line"><span class="comment"> * Install introspection hook function into libpthread.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @discussion</span></span><br><span class="line"><span class="comment"> * The caller is responsible for implementing chaining to the hook that was</span></span><br><span class="line"><span class="comment"> * previously installed (if any).</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param hook</span></span><br><span class="line"><span class="comment"> * Pointer to hook function.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @result</span></span><br><span class="line"><span class="comment"> * Previously installed hook function or NULL.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">__API_AVAILABLE(macos(<span class="number">10.9</span>), ios(<span class="number">7.0</span>))</span><br><span class="line">__attribute__((__nonnull__, __warn_unused_result__))</span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">pthread_introspection_hook_t</span></span><br><span class="line">pthread_introspection_hook_install(<span class="keyword">pthread_introspection_hook_t</span> hook);</span><br><span class="line"></span><br><span class="line">__END_DECLS</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>pthread_introspection_hook_install</p>
+<p>  函数的作用是安装一个回调函数来挂钩线程生命周期的四个过程。因此函数的入参是一个函数指针，返回的则是老的挂钩函数的指针。回调函数是一个格式为pthread_introspection_hook_t类型的函数，</p>
+</li>
+</ul>
+<p>回调函数的每个参数的意义如下：<br>event：指定线程所处的状态。<br>thread: 线程的句柄，每个pthread线程都由一个pthread_t类型句柄来唯一标识。<br>addr: 为线程分配的栈内存的基地址。<br>size: 为线程分配的栈内存的尺寸。</p>
+<p>上面说的每一个线程有创建、运行、终止、销毁四个状态，而event则是用来表示线程的四种状态的值，它的值是如下枚举结构的某一个值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">enum &#123;</span><br><span class="line">    PTHREAD_INTROSPECTION_THREAD_CREATE = 1,  //创建</span><br><span class="line">    PTHREAD_INTROSPECTION_THREAD_START,    //运行</span><br><span class="line">    PTHREAD_INTROSPECTION_THREAD_TERMINATE,  //终止</span><br><span class="line">    PTHREAD_INTROSPECTION_THREAD_DESTROY,  //销毁</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是在函数中设置回调挂钩函数后只会监控设置之后的所有线程状态的变化。因此如果我们要监控整个应用生命周期的所有线程的状态时，需要尽可能早的进行回调函数的设置，比如可以在某个类的+load方法中，或者在某个全局C++对象的构造函数中设置等等。<br>回调挂钩函数中的第二个参数thread是一个类型为pthread_t线程句柄对象，这个对象的结构并没有对外公开。但是因为pthread库已经被苹果开源：<a href="https://opensource.apple.com/source/libpthread/" target="_blank" rel="noopener">https://opensource.apple.com/source/libpthread/</a>  。因此我们可以通过线程句柄对象的内部定义来获取关于线程的更多信息。以方便我们能对线程的各种数据进行更加详细的记录。当然这里我们需要考虑到线程句柄的不同版本下的数据成员的问题</p>
+<p>一个简单的在main函数内实现线程监控的代码示例:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;pthread/introspection.h&gt;</span><br><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">pthread_introspection_hook_t   g_oldpthread_introspection_hook = NULL;</span><br><span class="line"></span><br><span class="line">void mypthread_introspection_hook(unsigned int event, pthread_t thread, void *addr, size_t size)</span><br><span class="line">&#123;</span><br><span class="line">   __uint64_t threadid;</span><br><span class="line">    pthread_threadid_np(thread, &amp;threadid);</span><br><span class="line">     </span><br><span class="line">     printf(&quot;thread_id = %d,  addr = %p, size = %d\n&quot;, threadid, addr, size);</span><br><span class="line">     switch (event)</span><br><span class="line">     &#123;</span><br><span class="line">           case PTHREAD_INTROSPECTION_THREAD_CREATE:</span><br><span class="line">              //dothing ..</span><br><span class="line">              break;</span><br><span class="line">           case PTHREAD_INTROSPECTION_THREAD_START:</span><br><span class="line">             //dothing ..</span><br><span class="line">              break;</span><br><span class="line">           case  PTHREAD_INTROSPECTION_THREAD_TERMINATE:</span><br><span class="line">             //dothing ..</span><br><span class="line">              break;</span><br><span class="line">           case PTHREAD_INTROSPECTION_THREAD_DESTROY:</span><br><span class="line">             //dothing ..</span><br><span class="line">              break;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">   //记得在最后或者开头调用老的hook函数</span><br><span class="line">  if (g_oldpthread_introspection_hook != NULL)</span><br><span class="line">    g_oldpthread_introspection_hook(event, thread, addr, size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">   //注册线程监控的回调函数为mypthread_introspection_hook</span><br><span class="line">   g_oldpthread_introspection_hook  = pthread_introspection_hook_install(mypthread_introspection_hook);</span><br><span class="line"></span><br><span class="line">   @autoreleasepool &#123;</span><br><span class="line">        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>你可以通过开源代码中对pthread_t类型结构体的定义来获取线程的更多信息，但是要注意线程库的版本信息。</p>
+</blockquote>
+<p>线程监控回调函数中的代码应该尽可能的精简和高效，包括官方的头文件中也有一段说明(实际上是可以被appstore审核通过的)：</p>
+<blockquote>
+<p>This should only be used for introspection and debugging tools. Do not rely<br>on it in shipping code.</p>
+</blockquote>
+<p>具体参考文章 <a href="https://www.jianshu.com/p/813ba526204b" target="_blank" rel="noopener">iOS线程生命周期的监控</a></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/klugjo/hexo-theme-clean-blog" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 christian_smile<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
