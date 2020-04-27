@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="christian_smile">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="深入理解Link Map File">
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="45°仰望星空">
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article">
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary">
+    
+
+    <!-- Title -->
+    
+    <title>深入理解Link Map File - 45°仰望星空</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Configurable Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/klugjo/hexo-theme-clean-blog">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>深入理解Link Map File</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2020-04-26
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h4 id="Link-Map-File初识"><a href="#Link-Map-File初识" class="headerlink" title="Link Map File初识"></a>Link Map File初识</h4><p>我们编写的源码需要经过编译、链接，最终生成一个可执行文件。在编译阶段，每个类会生成对应的.o文件（目标文件）。在链接阶段，会把.o文件和动态库链接在一起。Link Map File就是这样一个记录链接相关信息的纯文本文件，里面记录了可执行文件的路径、CPU架构、目标文件、符号等信息。</p>
+<h4 id="为什么要理解Link-Map-File"><a href="#为什么要理解Link-Map-File" class="headerlink" title="为什么要理解Link Map File"></a>为什么要理解Link Map File</h4><p>理解Link Map File，可以帮助我们：</p>
+<ul>
+<li>理解链接过程</li>
+<li>理解Crash时，通过Symbols还原出源码的机制</li>
+<li>理解内存分段、分区</li>
+<li>分析可执行文件中哪个类或库占用比较大，进行安装包瘦身</li>
+</ul>
+<h4 id="Link-Map-File配置"><a href="#Link-Map-File配置" class="headerlink" title="Link Map File配置"></a>Link Map File配置</h4><p>点击工程，选择Build Setting选项，搜索map，可以看到如下界面。将Write Link Map File设置为Yes后，Build结束后，会在默认路径下生成一个Link Map File文件，该文件是txt格式的。点击Path to Link Map File，可以设置Debug或Release模式下的生成路径。</p>
+<h4 id="Path-amp-Arch"><a href="#Path-amp-Arch" class="headerlink" title="Path &amp; Arch"></a>Path &amp; Arch</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Path: /xxxxxx/Library/Developer/Xcode/DerivedData/xxxxxx.app-hjsjojqpqxstlzceepeqbvxqzcrh/Build/Intermediates.noindex/xxxx/xxxxxx.app/xxxxxx</span></span><br><span class="line"><span class="comment"># Arch: x86_64</span></span><br></pre></td></tr></table></figure>
+<p>Path是可执行文件的路径，Arch是架构类型。</p>
+<h4 id="Object-files"><a href="#Object-files" class="headerlink" title="Object files"></a>Object files</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># Object files:</span></span><br><span class="line">[<span class="meta">  0</span>] linker synthesized</span><br><span class="line">[<span class="meta">  1</span>] /Users/shanggaolin/Library/Developer/Xcode/DerivedData/NewMissFresh-hjsjojqpqxstlzceepeqbvxqzcrh/Build/Intermediates.noindex/NewMissFresh.build/Debug-iphonesimulator/NewMissFresh.build/NewMissFresh.app-Simulated.xcent</span><br><span class="line">[<span class="meta">  2</span>] /Users/shanggaolin/Library/Developer/Xcode/DerivedData/NewMissFresh-hjsjojqpqxstlzceepeqbvxqzcrh/Build/Intermediates.noindex/NewMissFresh.build/Debug-iphonesimulator/NewMissFresh.build/Objects-normal/x86_64/UIButton+SSEdgeInsets.o</span><br><span class="line">[<span class="meta">  3</span>] /Users/shanggaolin/Library/Developer/Xcode/DerivedData/NewMissFresh-hjsjojqpqxstlzceepeqbvxqzcrh/Build/Intermediates.noindex/NewMissFresh.build/Debug-iphonesimulator/NewMissFresh.build/Objects-normal/x86_64/MFRankListTableViewDelegate.o</span><br></pre></td></tr></table></figure>
+<p>在编译成目标文件后，通过链接器进行链接，最终合成可执行文件。这里展示的信息是链接时用到的文件，包括.o文件和dylib库。第一列的序号是类的编号，通过该编号可以对应到具体的类。</p>
+<p>在后面的Symbols部分，我们会用到类的编号。</p>
+<h4 id="Section区"><a href="#Section区" class="headerlink" title="Section区"></a>Section区</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># Sections:</span></span><br><span class="line"><span class="meta"># Address   Size        Segment Section</span></span><br><span class="line"><span class="number">0x100002780</span> <span class="number">0x0129617D</span>  __TEXT  __text</span><br><span class="line"><span class="number">0x1012988FE</span> <span class="number">0x000015E4</span>  __TEXT  __stubs</span><br><span class="line"><span class="number">0x101299EE4</span> <span class="number">0x0000207C</span>  __TEXT  __stub_helper</span><br><span class="line"><span class="number">0x10129BF60</span> <span class="number">0x0002BE10</span>  __TEXT  __<span class="keyword">const</span></span><br><span class="line"><span class="number">0x1012C7D70</span> <span class="number">0x00097A6D</span>  __TEXT  __objc_methname</span><br><span class="line"><span class="number">0x10135F7DD</span> <span class="number">0x00010CD5</span>  __TEXT  __objc_classname</span><br><span class="line"><span class="number">0x1013704B2</span> <span class="number">0x00015F47</span>  __TEXT  __objc_methtype</span><br><span class="line"><span class="number">0x101386400</span> <span class="number">0x000B6CB2</span>  __TEXT  __cstring</span><br><span class="line"><span class="number">0x10143D0B2</span> <span class="number">0x00007D60</span>  __TEXT  __ustring</span><br><span class="line"><span class="number">0x101444E14</span> <span class="number">0x00054EA8</span>  __TEXT  __gcc_except_tab</span><br><span class="line"><span class="number">0x101499CBC</span> <span class="number">0x000002B0</span>  __TEXT  __entitlements</span><br><span class="line"><span class="number">0x101499F6C</span> <span class="number">0x00014CA8</span>  __TEXT  __unwind_info</span><br><span class="line"><span class="number">0x1014AEC18</span> <span class="number">0x0003B3E8</span>  __TEXT  __eh_frame</span><br><span class="line"></span><br><span class="line"><span class="number">0x1014EA000</span> <span class="number">0x00000010</span>  __DATA  __nl_symbol_ptr</span><br><span class="line"><span class="number">0x1014EA010</span> <span class="number">0x00000BD8</span>  __DATA  __got</span><br><span class="line"><span class="number">0x1014EABE8</span> <span class="number">0x00001D30</span>  __DATA  __la_symbol_ptr</span><br><span class="line"><span class="number">0x1014EC918</span> <span class="number">0x00000028</span>  __DATA  __mod_init_func</span><br><span class="line"><span class="number">0x1014EC940</span> <span class="number">0x00073BB0</span>  __DATA  __<span class="keyword">const</span></span><br><span class="line"><span class="number">0x1015604F0</span> <span class="number">0x00062700</span>  __DATA  __cfstring</span><br><span class="line"><span class="number">0x1015C2BF0</span> <span class="number">0x00004BD0</span>  __DATA  __objc_classlist</span><br><span class="line"><span class="number">0x1015C77C0</span> <span class="number">0x00000058</span>  __DATA  __objc_nlclslist</span><br><span class="line"><span class="number">0x1015C7818</span> <span class="number">0x00000640</span>  __DATA  __objc_catlist</span><br><span class="line"><span class="number">0x1015C7E58</span> <span class="number">0x00000088</span>  __DATA  __objc_nlcatlist</span><br><span class="line"><span class="number">0x1015C7EE0</span> <span class="number">0x00001018</span>  __DATA  __objc_protolist</span><br><span class="line"><span class="number">0x1015C8EF8</span> <span class="number">0x00000008</span>  __DATA  __objc_imageinfo</span><br><span class="line"><span class="number">0x1015C8F00</span> <span class="number">0x001EE0A0</span>  __DATA  __objc_const</span><br><span class="line"><span class="number">0x1017B6FA0</span> <span class="number">0x00024A08</span>  __DATA  __objc_selrefs</span><br><span class="line"><span class="number">0x1017DB9A8</span> <span class="number">0x000000B8</span>  __DATA  __objc_protorefs</span><br><span class="line"><span class="number">0x1017DBA60</span> <span class="number">0x00004AD8</span>  __DATA  __objc_classrefs</span><br><span class="line"><span class="number">0x1017E0538</span> <span class="number">0x00002F08</span>  __DATA  __objc_superrefs</span><br><span class="line"><span class="number">0x1017E3440</span> <span class="number">0x00015A38</span>  __DATA  __objc_ivar</span><br><span class="line"><span class="number">0x1017F8E78</span> <span class="number">0x0002F670</span>  __DATA  __objc_data</span><br><span class="line"><span class="number">0x1018284F0</span> <span class="number">0x00024D18</span>  __DATA  __data</span><br><span class="line"><span class="number">0x10184D210</span> <span class="number">0x00006C74</span>  __DATA  __bss</span><br><span class="line"><span class="number">0x101853E90</span> <span class="number">0x00000E90</span>  __DATA  __common</span><br></pre></td></tr></table></figure>
+<p>第一列是起始位置，第二列是Section占用内存大小，第三列是Segment类型，第四列是Section类型。<br> 为了理解上面的信息，我们需要先补充一点Mach-O知识。<br> Mach-O 文件中的虚拟地址最终会映射到物理地址上。这些地址被分成不同的Segement： <strong>TEXT段、</strong>DATA段 和 <strong>LINKEDIT段。<br> （1）</strong>TEXT 包含 Mach header，被执行的代码和只读常量（如C 字符串），只读可执行（r-x）。<br> （2）<strong>DATA 包含全局变量，静态变量等，可读写（rw-）。<br> （3）</strong>LINKEDIT 包含了加载程序的『元数据』，比如函数的名称和地址，只读（r–）。</p>
+<p>Segement划分成了不同的Section，不同的Section存储着不同的信息，下面是一些常用的Section的介绍。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  __TEXT段中的一些Section</span></span><br><span class="line"><span class="number">1.</span> __text: 代码节，存放机器编译后的代码</span><br><span class="line"><span class="number">2.</span> __stubs: 用于辅助做动态链接代码（dyld）.</span><br><span class="line"><span class="number">3.</span> __stub_helper:用于辅助做动态链接（dyld）.</span><br><span class="line"><span class="number">4.</span> __objc_methname:objc的方法名称</span><br><span class="line"><span class="number">5.</span> __cstring:代码运行中包含的字符串常量,比如代码中定义`<span class="meta">#define kGeTuiPushAESKey        @<span class="meta-string">"DWE2#@e2!"</span>`,那DWE2#@e2!会存在这个区里。</span></span><br><span class="line"><span class="number">6.</span> __objc_classname:objc类名</span><br><span class="line"><span class="number">7.</span> __objc_methtype:objc方法类型</span><br><span class="line"><span class="number">8.</span> __ustring:</span><br><span class="line"><span class="number">9.</span> __gcc_except_tab:</span><br><span class="line"><span class="number">10.</span> __<span class="keyword">const</span>:存储<span class="keyword">const</span>修饰的常量</span><br><span class="line"><span class="number">11.</span> __dof_RACSignal:</span><br><span class="line"><span class="number">12.</span> __dof_RACCompou:</span><br><span class="line"><span class="number">13.</span> __unwind_info:</span><br><span class="line"></span><br><span class="line"><span class="comment">// __DATA段中的一些Section</span></span><br><span class="line"><span class="number">1.</span> __got:存储引用符号的实际地址，类似于动态符号表</span><br><span class="line"><span class="number">2.</span> __la_symbol_ptr:lazy symbol pointers。懒加载的函数指针地址。和__stubs和stub_helper配合使用。具体原理暂留。</span><br><span class="line"><span class="number">3.</span> __mod_init_func:模块初始化的方法。</span><br><span class="line"><span class="number">4.</span> __<span class="keyword">const</span>:存储constant常量的数据。比如使用<span class="keyword">extern</span>导出的<span class="keyword">const</span>修饰的常量。</span><br><span class="line"><span class="number">5.</span> __cfstring:使用Core Foundation字符串</span><br><span class="line"><span class="number">6.</span> __objc_classlist:objc类列表,保存类信息，映射了__objc_data的地址</span><br><span class="line"><span class="number">7.</span> __objc_nlclslist:Objective-C 的 +load 函数列表，比 __mod_init_func 更早执行。</span><br><span class="line"><span class="number">8.</span> __objc_catlist: categories</span><br><span class="line"><span class="number">9.</span> __objc_nlcatlist:Objective-C 的categories的 +load函数列表。</span><br><span class="line"><span class="number">10.</span> __objc_protolist:objc协议列表</span><br><span class="line"><span class="number">11.</span> __objc_imageinfo:objc镜像信息</span><br><span class="line"><span class="number">12.</span> __objc_const:objc常量。保存objc_classdata结构体数据。用于映射类相关数据的地址，比如类名，方法名等。</span><br><span class="line"><span class="number">13.</span> __objc_selrefs:引用到的objc方法</span><br><span class="line"><span class="number">14.</span> __objc_protorefs:引用到的objc协议</span><br><span class="line"><span class="number">15.</span> __objc_classrefs:引用到的objc类</span><br><span class="line"><span class="number">16.</span> __objc_superrefs:objc超类引用</span><br><span class="line"><span class="number">17.</span> __objc_ivar:objc ivar指针,存储属性。</span><br><span class="line"><span class="number">18.</span> __objc_data:objc的数据。用于保存类需要的数据。最主要的内容是映射__objc_const地址，用于找到类的相关数据。</span><br><span class="line"><span class="number">19.</span> __data:暂时没理解，从日志看存放了协议和一些固定了地址（已经初始化）的静态量。</span><br><span class="line"><span class="number">20.</span> __bss:存储未初始化的静态量。比如：`<span class="keyword">static</span> <span class="built_in">NSThread</span> *_networkRequestThread = <span class="literal">nil</span>;`其中这里面的size表示应用运行占用的内存，不是实际的占用空间。所以计算大小的时候应该去掉这部分数据。</span><br><span class="line"><span class="number">21.</span> __common:存储导出的全局的数据。类似于<span class="keyword">static</span>，但是没有用<span class="keyword">static</span>修饰。比如KSCrash里面`<span class="built_in">NSDictionary</span>* g_registerOrders;`, g_registerOrders就存储在__common里面</span><br></pre></td></tr></table></figure>
+<p>虚拟内存最终会映射到物理内存，通过上面的介绍，我们就可以知道代码和数据在内存中是如何存储的。</p>
+<h4 id="Symbols"><a href="#Symbols" class="headerlink" title="Symbols"></a>Symbols</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span><br><span class="line"></span><br><span class="line"><span class="meta"># Symbols:</span></span><br><span class="line"><span class="comment">// __text代码区</span></span><br><span class="line"><span class="meta"># Address   Size        File  Name</span></span><br><span class="line"><span class="number">0x100002780</span> <span class="number">0x00000450</span>  [  <span class="number">2</span>] -[UIButton(SSEdgeInsets) setImageUpTitleDownWithSpacing:]</span><br><span class="line"><span class="number">0x100002BD0</span> <span class="number">0x00000070</span>  [  <span class="number">2</span>] _UIEdgeInsetsMake</span><br><span class="line"><span class="number">0x100002C40</span> <span class="number">0x000004B0</span>  [  <span class="number">2</span>] -[UIButton(SSEdgeInsets) setImageRightTitleLeftWithSpacing:]</span><br><span class="line"><span class="number">0x1000030F0</span> <span class="number">0x000001B0</span>  [  <span class="number">2</span>] -[UIButton(SSEdgeInsets) setDefaultImageTitleStyleWithSpacing:]</span><br><span class="line"><span class="number">0x1000032A0</span> <span class="number">0x000006F0</span>  [  <span class="number">2</span>] -[UIButton(SSEdgeInsets) setEdgeInsetsWithType:marginType:margin:]</span><br><span class="line"><span class="number">0x100003990</span> <span class="number">0x000000B0</span>  [  <span class="number">3</span>] -[MFRankListTableViewDelegate removeAllCellModels]</span><br><span class="line"><span class="number">0x100003A40</span> <span class="number">0x000002A0</span>  [  <span class="number">3</span>] -[MFRankListTableViewDelegate appendCellModels:]</span><br><span class="line"><span class="number">0x100003CE0</span> <span class="number">0x00000050</span>  [  <span class="number">3</span>] -[MFRankListTableViewDelegate numberOfSectionsInTableView:]</span><br><span class="line"><span class="number">0x100003D30</span> <span class="number">0x000000C0</span>  [  <span class="number">3</span>] -[MFRankListTableViewDelegate tableView:numberOfRowsInSection:]</span><br><span class="line"></span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// __objc_methname方法名区</span></span><br><span class="line"><span class="number">0x1012C7D70</span> <span class="number">0x0000000F</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: imageForState:</span><br><span class="line"><span class="number">0x1012C7D7F</span> <span class="number">0x00000005</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: size</span><br><span class="line"><span class="number">0x1012C7D84</span> <span class="number">0x00000014</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: setTitleEdgeInsets:</span><br><span class="line"><span class="number">0x1012C7D98</span> <span class="number">0x0000000F</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: titleForState:</span><br><span class="line"><span class="number">0x1012C7DA7</span> <span class="number">0x00000007</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: length</span><br><span class="line"><span class="number">0x1012C7DAE</span> <span class="number">0x0000000B</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: titleLabel</span><br><span class="line"><span class="number">0x1012C7DB9</span> <span class="number">0x00000005</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: font</span><br><span class="line"><span class="number">0x1012C7DBE</span> <span class="number">0x00000025</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: dictionaryWithObjects:forKeys:count:</span><br><span class="line"><span class="number">0x1012C7DE3</span> <span class="number">0x00000014</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: sizeWithAttributes:</span><br><span class="line"><span class="number">0x1012C7DF7</span> <span class="number">0x00000014</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: setImageEdgeInsets:</span><br><span class="line"><span class="number">0x1012C7E0B</span> <span class="number">0x00000019</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: attributedTitleForState:</span><br><span class="line"><span class="number">0x1012C7E24</span> <span class="number">0x00000006</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: frame</span><br><span class="line"><span class="number">0x1012C7E2A</span> <span class="number">0x00000020</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: setImageUpTitleDownWithSpacing:</span><br><span class="line"><span class="number">0x1012C7E4A</span> <span class="number">0x00000023</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: setImageRightTitleLeftWithSpacing:</span><br><span class="line"><span class="number">0x1012C7E6D</span> <span class="number">0x00000026</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: setDefaultImageTitleStyleWithSpacing:</span><br><span class="line"><span class="number">0x1012C7E93</span> <span class="number">0x00000029</span>  [  <span class="number">2</span>] literal <span class="keyword">string</span>: setEdgeInsetsWithType:marginType:margin:</span><br><span class="line"><span class="number">0x1012C7EBC</span> <span class="number">0x0000000E</span>  [  <span class="number">3</span>] literal <span class="keyword">string</span>: setIsLoading:</span><br><span class="line"></span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// __objc_classlist类列表区</span></span><br><span class="line"><span class="number">0x1015C2BF0</span> <span class="number">0x00000008</span>  [  <span class="number">3</span>] anon</span><br><span class="line"><span class="number">0x1015C2BF8</span> <span class="number">0x00000008</span>  [  <span class="number">4</span>] anon</span><br><span class="line"><span class="number">0x1015C2C00</span> <span class="number">0x00000008</span>  [  <span class="number">5</span>] anon</span><br><span class="line"><span class="number">0x1015C2C08</span> <span class="number">0x00000008</span>  [  <span class="number">6</span>] anon</span><br><span class="line"><span class="number">0x1015C2C10</span> <span class="number">0x00000008</span>  [  <span class="number">7</span>] anon</span><br></pre></td></tr></table></figure>
+<h5 id="1、-text代码区"><a href="#1、-text代码区" class="headerlink" title="1、__text代码区"></a>1、__text代码区</h5><p>通过地址0x100002780，可以知道它位于<strong>TEXT段的</strong>text区，这段区域存储着代码，通过符号表，根据地址可以对应出源代码，如<code>-[UIButton(SSEdgeInsets) setImageUpTitleDownWithSpacing:]</code>。通过第三列的类编号，可以知道该代码属于<code>UIButton+SSEdgeInsets</code>分类。</p>
+<h5 id="2、-objc-methname方法名区"><a href="#2、-objc-methname方法名区" class="headerlink" title="2、__objc_methname方法名区"></a>2、__objc_methname方法名区</h5><p>通过地址0x1012C7D70，可以知道它位于<strong>TEXT段的</strong>objc_methname区，这段区域存储着方法名，通过符号表，根据地址可以对应出具体的方法名，如<code>imageForState</code>。<br> 由上面的信息，可以看出方法名越长，最终占用的内存也越大。</p>
+<h5 id="3、-objc-classlist类列表区"><a href="#3、-objc-classlist类列表区" class="headerlink" title="3、__objc_classlist类列表区"></a>3、__objc_classlist类列表区</h5><p><strong>objc_classlist区的size值都是8，区域里存储的值都是一个指针，指向了类的虚拟地址（</strong>objc_data区中地址）。<br> objc_class的数据结构为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">objc_class</span> &#123;</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> isa;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> wuperclass;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> cache;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> vtable;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> data;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> reserved1;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> reserved2;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> reserved3;</span><br><span class="line">&#125;objc_class;</span><br></pre></td></tr></table></figure>
+<p>上面的data字段保存了_objc_const区对应的数据地址（objc_classdata地址）。<br> objc_classdata数据结构为:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">objc_classdata</span> &#123;</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> flags;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> instanceStart;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> instanceSize;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> reserved;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> ivarlayout;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> name;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> baseMethod;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> baseProtocol;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> ivars;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> weakIvarLayout;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> baseProperties;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>objc_classdata结构体中保存了类名，方法名，协议名，ivar指针和属性对应的地址。通过地址，可以找到对应的段和分区，进而找到对应类的各种信息。</p>
+<h4 id="查找未使用的类和方法"><a href="#查找未使用的类和方法" class="headerlink" title="查找未使用的类和方法"></a>查找未使用的类和方法</h4><p><strong>objc_classrefs是引用到的类，_objc_classname是所有类名，通过分析两者之间的差别，就可以知道哪些类没有用到。<br> 同理，分析</strong>objc_selrefs和_objc_methname的差别，也可知道哪些方法没用到。<br> 由于OC是动态语言，中间可能会出现判断失误的情况。</p>
+<h4 id="分析大文件"><a href="#分析大文件" class="headerlink" title="分析大文件"></a>分析大文件</h4><p>在Symbols部分，我们可以把类编号相同的size加起来，算出每个类或库占用的大小。在Object files部分根据类的编号可以查出对应的类。分析的结果对App安装包瘦身会有一些帮助。github上有很多实现了这样功能的开源工具，实现原理很简单，如有需要可自行查找。</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/klugjo/hexo-theme-clean-blog" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 christian_smile<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
