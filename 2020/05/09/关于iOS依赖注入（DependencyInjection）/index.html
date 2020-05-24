@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="christian_smile">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="关于iOS依赖注入（DependencyInjection）">
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="45°仰望星空">
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article">
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary">
+    
+
+    <!-- Title -->
+    
+    <title>关于iOS依赖注入（DependencyInjection） - 45°仰望星空</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Configurable Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/klugjo/hexo-theme-clean-blog">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>关于iOS依赖注入（DependencyInjection）</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2020-05-09
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>##dependency injection 关于IOS依赖注入那些事</p>
+<blockquote>
+<p>原文链接 <a href="https://runningyoung.github.io/2015/06/30/2015-08-04-dependency-injection/" target="_blank" rel="noopener">https://runningyoung.github.io/2015/06/30/2015-08-04-dependency-injection/</a></p>
+</blockquote>
+<p>　 本文介绍的是另一个屎上最牛叉的ios开发新框架，<strong><em>最大的特点就是：帮助我们开发出松散耦合(loose coupled)、可维护、可测试的代码和程序。这条原则的做法是大家熟知的面向接口，或者说是面向抽象编程。\</em></strong> 众所周知 该编程思想在各大语言中都有体现如 jave C++ PHP以及.net中。当然设计模式的广泛程度远远大于这些，IOS 当然也不例外。 <strong><em>本文主要介绍本人在学习dependency injection的时候的学习过程以及对一些学习资料的总结，主要介绍ios中的两大框架<a href="https://github.com/atomicobject/objection" target="_blank" rel="noopener">objection</a>和<a href="http://typhoonframework.org/" target="_blank" rel="noopener">Typhoon</a>。\</em></strong> 闲话不多吹下面进入正题。</p>
+<p>###什么是dependency injection？　</p>
+<p>####简单来说：<br>　 关于什么是依赖注入，在Stack Overflow上面有一个问题，<a href="http://stackoverflow.com/questions/1638919/how-to-explain-dependency-injection-to-a-5-year-old" target="_blank" rel="noopener">如何向一个5岁的小孩解释依赖注入</a>，其中得分最高的一个答案是：</p>
+<blockquote>
+<p>“When you go and get things out of the refrigerator for yourself, you can cause problems. You might leave the door open, you might get something Mommy or Daddy doesn’t want you to have. You might even be looking for something we don’t even have or which has expired.</p>
+<p>What you should be doing is stating a need, “I need something to drink with lunch,” and then we will make sure you have something when you sit down to eat.”</p>
+</blockquote>
+<p>映射到面向对象程序开发中就是：高层类(5岁小孩)应该依赖底层基础设施(家长)来提供必要的服务。</p>
+<p>编写松耦合的代码说起来很简单，但是实际上写着写着就变成了紧耦合。</p>
+<p>####更详细点的解释：</p>
+<p>依赖倒置解决了高层次模块依赖于低层次模块和其细节的问题。</p>
+<p>　　Dependency injection 是一个将行为从依赖中分离的技术，简单地说，它允许开发者定义一个方法函数依赖于外部其他各种交互，而不需要编码如何获得这些外部交互的实例。 这样就在各种组件之间解耦，从而获得干净的代码，相比依赖的硬编码， 一个组件只有在运行时才调用其所需要的其他组件，因此在代码运行时，通过特定的框架或容器，将其所需要的其他依赖组件进行注入，主动推入。</p>
+<p>　　依赖注入可以看成是 反转控制 inversion of control 的一个特例。反转的是依赖，而不是其他，JNDI也是一种反转控制，它反转的JNDI名称或资源。参考： <a href="http://martinfowler.com/articles/injection.html" target="_blank" rel="noopener">“Inversion of Control Containers and the Dependency Injection pattern”</a>。</p>
+<p>　　依赖注入是最早Spring和piconcontainer等提出，如今已经是一个缺省主流模式，并扩展到前端如Angular.js等等。</p>
+<p>　　依赖注入与IOC模式类似工厂模式，是一种解决调用者和被调用者依赖耦合关系的模式，自2004年诞生以来，至今已经成为Java和其他领域的主流模式。它解决了对象之间的依赖关系，使得对象只依赖IOC/DI容器，不再直接相互依赖，实现松耦合，然后在对象创建时，由IOC/DI容器将其依赖的对象注入Inject其体内，故又称依赖注入依赖注射模式，最大程度实现松耦合，特别是Autowiring/Autowired自动配对引入，再结合Java的垃圾回收机制，使得在Java中，对象不再需要开发者自己创建，也需要开发者自己销毁，只需要直接使用即可，大大提升了开发效率。</p>
+<p>　　详细解释：依赖注入说白一点，就是容器将某个类依赖的其他类注入到这个类中。 　　</p>
+<p>###为什么要用dependency injection<br>　 依赖注入框架的运用可以帮我们将APP的设计分割成好几个模块，分给不同的开人员，当完成开发之后再进行合并充分解决了团队之间模块化分工的不足.借objic.io上一篇<a href="http://www.objc.io/issues/15-testing/dependency-injection/" target="_blank" rel="noopener">关于Dependency Injection</a>的一句话:</p>
+<blockquote>
+<p>My initial motivation for exploring DI came from doing test-driven development, because in TDD you constantly wrestle with the question of “How do I write a unit test for this?” But I discovered that DI is actually concerned with a bigger idea: that our code should be composed of modules that we snap together to build an application.</p>
+<p>There are many benefits to such an approach. Graham Lee’s article, <a href="http://www.bignerdranch.com/blog/dependency-injection-ios/" target="_blank" rel="noopener">“Dependency Injection, iOS and You,”</a> describes some of them: “to adapt… to new requirements, make bug fixes, add new features, and test components in isolation.”</p>
+</blockquote>
+<p>大体意思:</p>
+<p>我在探索DI最初的动机来自做测试驱动的开发，因为在TDD你不断地与问题搏斗“我怎样写单元测试吗？”但我发现，DI实际上是涉及一个更大的想法：即我们的代码应该由我们扣合在一起来构建应用程序模块。</p>
+<p>有许多好处，这样的做法。格雷厄姆李的文章，<a href="http://www.bignerdranch.com/blog/dependency-injection-ios/" target="_blank" rel="noopener">“依赖注入，iOS和你”</a>，介绍了其中一些：“适应……新的要求，作出错误修复，隔离增加新的功能以及测试组件。”</p>
+<p>用文字说这些概念其实很抽象，下面用几张图片说明下：</p>
+<p>通过objection实现依赖注入后，就能更好地实现SRP(Single Responsibility Principle)，代码更简洁，心情更舒畅，生活更美好。拿Pinterest来说，下面的页面就可以划分为3个Section。</p>
+<p><a href="http://7xsugd.com2.z0.glb.clouddn.com/runningyoungBlog/images/DI01.png" target="_blank" rel="noopener">点击查看图片</a></p>
+<p><a href="http://m1.yea.im/1O8.png" target="_blank" rel="noopener"><img src="http://m1.yea.im/1O8.png" alt="点击查看图片"></a></p>
+<p>各个Section可以由不同的人负责，然后串到一起就行，也能一定程度地避免MVC(Mess View Controller)的出现,对于提高开发成员的效率也会有不少的帮助。</p>
+<p>　 <strong>其实用简单的一句话来说就是： 通过DI设计模式，将项目模块化，以提高开发效率。</strong></p>
+<p>###dependency injection试图解决什么问题呢<br><strong>我们知道，在IOS基本教程中有一个定律告诉我们：所有的对象都必须创建；或者说：使用对象之前必须创建，但是现在我们可以不必一定遵循这个定律了，我们可以从DI容器中直接获得一个对象然后直接使用，无需事先创建它们。</strong></p>
+<p>　　<strong>这种变革，就如同我们无需考虑对象销毁一样；因为IOS的 ARC 帮助我们实现了对象销毁；现在又无需考虑对象创建，对象的创建和销毁都无需考虑了，这给编程带来的影响是巨大的</strong></p>
+<p>我们可以通过一篇博文了解下原理,该文章是由Limboy大神写的<a href="http://limboy.me/ios/2014/04/15/use-objection-to-decouple-ios-project.html" target="_blank" rel="noopener">使用objection来模块化开发iOS项目</a></p>
+<p>这里提前介绍了一个DI框架就是Objection,详细介绍就去看博文，在此只分析下DI的设计原理:</p>
+<p><strong>类似于Objection的大部分DI框架，主要为我们提供了一个容器,来管理创建销毁对象，我们并不会过多考虑创建对象的方法内容以及其再其他类中的依赖关系，这些都在框架中为我们解决了，我们只需要再需要的时候调用即可，并不需要重复的导入import，避免不同类直接多次重复的import导致的依赖循环问题。</strong></p>
+<p>###那么问题来了？如何学习dependency injection呢</p>
+<blockquote>
+<p>ios有关DI依赖注入的框架比较好用的有两个：<a href="https://github.com/atomicobject/objection" target="_blank" rel="noopener">objection</a> 和 <a href="https://github.com/appsquickly/Typhoon" target="_blank" rel="noopener">Typhoon</a></p>
+</blockquote>
+<p>下面就从几个方便来介绍下这两个框架</p>
+<p>####<a href="https://github.com/atomicobject/objection" target="_blank" rel="noopener">objection</a> 和 <a href="https://github.com/appsquickly/Typhoon" target="_blank" rel="noopener">Typhoon</a>这两个框架有什么区别呢<br>其实这两个框架各有优势：</p>
+<p>1.objection框架，使用起来比较灵活，用法比较简单。示例代码如下：</p>
+<p>属性注册：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@class Engine, Brakes;</span><br><span class="line"></span><br><span class="line">@interface Car : NSObject</span><br><span class="line">&#123;</span><br><span class="line">  Engine *engine;</span><br><span class="line">  Brakes *brakes;</span><br><span class="line">   BOOL awake;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Will be filled in by objection</span><br><span class="line">@property(nonatomic, strong) Engine *engine;</span><br><span class="line">// Will be filled in by objection</span><br><span class="line">@property(nonatomic, strong) Brakes *brakes;</span><br><span class="line">@property(nonatomic) BOOL awake;</span><br><span class="line"></span><br><span class="line">@implementation Car</span><br><span class="line">objection_requires(@&quot;engine&quot;, @&quot;brakes&quot;) //属性的依赖注入</span><br><span class="line">@synthesize engine, brakes, awake;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>方法注入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@implementation Truck</span><br><span class="line">objection_requires(@&quot;engine&quot;, @&quot;brakes&quot;)</span><br><span class="line">objection_initializer(truckWithMake:model:)//方法的依赖注入</span><br><span class="line">+ (instancetype)truckWithMake:(NSString *) make model: (NSString *)model &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>2.对比来说Typhoon的使用起来就比较规范，首先需要创建一个 TyphoonAssembly的子类。其需要注入的方法和属性都需要写在这个统一个子类中，当然可以实现不同的子类来完成不同的功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@interface MiddleAgesAssembly : TyphoonAssembly</span><br><span class="line"></span><br><span class="line">- (Knight*)basicKnight;</span><br><span class="line"></span><br><span class="line">- (Knight*)cavalryMan;</span><br><span class="line"></span><br><span class="line">- (id&lt;Quest&gt;)defaultQuest;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>属性注入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (Knight *)cavalryMan</span><br><span class="line">&#123;</span><br><span class="line">    return [TyphoonDefinition withClass:[CavalryMan class] </span><br><span class="line">    configuration:^(TyphoonDefinition *definition) &#123;</span><br><span class="line"></span><br><span class="line">    [definition injectProperty:@selector(quest) with:[self defaultQuest]];</span><br><span class="line">    [definition injectProperty:@selector(damselsRescued) with:@(12)];</span><br><span class="line">&#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法注入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (Knight *)knightWithMethodInjection</span><br><span class="line">&#123;</span><br><span class="line">       return [TyphoonDefinition withClass:[Knight class] </span><br><span class="line">    configuration:^(TyphoonDefinition *definition) &#123;</span><br><span class="line">    [definition injectMethod:@selector(setQuest:andDamselsRescued:) </span><br><span class="line">        parameters:^(TyphoonMethod *method) &#123;</span><br><span class="line"></span><br><span class="line">        [method injectParameterWith:[self defaultQuest]];</span><br><span class="line">        [method injectParameterWith:@321];</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.当然还有一些硬性的区别就是Typhoon现在已经支持Swift。</p>
+<p>4.两者维护时间都超过2年以上。</p>
+<p>Tythoon官方介绍的优势：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">1）Non-invasive. No macros or XML required. Uses powerful ObjC runtime instrumentation.</span><br><span class="line"></span><br><span class="line">2）No magic strings – supports IDE refactoring, code-completion and compile-time checking.</span><br><span class="line"></span><br><span class="line">3）Provides full-modularization and encapsulation of configuration details. Let your architecture tell a story.</span><br><span class="line"></span><br><span class="line">4）Dependencies declared in any order. (The order that makes sense to humans).</span><br><span class="line"></span><br><span class="line">5）Makes it easy to have multiple configurations of the same base-class or protocol.</span><br><span class="line"></span><br><span class="line"> 6）Supports injection of view controllers and storyboard integration. Supports both initializer and property injection, plus life-cycle management.</span><br><span class="line"></span><br><span class="line">7）Powerful memory management features. Provides pre-configured objects, without the memory overhead of singletons.</span><br><span class="line"></span><br><span class="line">8）Excellent support for circular dependencies.</span><br><span class="line"></span><br><span class="line">9）Lean. Has a very low footprint, so is appropriate for CPU and memory constrained devices.</span><br><span class="line"></span><br><span class="line">10）While being feature-packed, Typhoon weighs-in at just 3000 lines of code in total.</span><br><span class="line"></span><br><span class="line"> 11）Battle-tested — used in all kinds of Appstore-featured apps.</span><br></pre></td></tr></table></figure>
+<p>大体翻译过来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1)非侵入性。不需要宏或XML。使用强大的ObjC运行时仪器。</span><br><span class="line">2)没有魔法字符串——支持IDE重构,完成和编译时检查。</span><br><span class="line">3)提供full-modularization和封装的配置细节。让你的架构告诉一个故事。</span><br><span class="line">4)依赖关系中声明的任何顺序。(对人类有意义的顺序)。</span><br><span class="line">5)很容易有多个配置相同的基类或协议。</span><br><span class="line">6)支持注射的视图控制器和故事板集成。同时支持初始化器和属性注入,以及生命周期管理。</span><br><span class="line">7)强大的内存管理功能。提供预配置对象,没有单件的内存开销。</span><br><span class="line">8)优秀的支持循环依赖。</span><br><span class="line">9)精益。占用很低,所以适合CPU和内存受限的设备。</span><br><span class="line">10),功能强大,台风重总共只有3000行代码。</span><br><span class="line">11)久经沙场,用于各种Appstore-featured应用。</span><br></pre></td></tr></table></figure>
+<p>　 　 针对这两个框架网上教程并不多，收集了一些比较有用的资料。最主要的用法还得看官方文档分别在：</p>
+<p><a href="https://github.com/atomicobject/objection" target="_blank" rel="noopener">objection</a> 和 <a href="https://github.com/appsquickly/Typhoon" target="_blank" rel="noopener">Typhoon</a></p>
+<p>###大体学习步骤：</p>
+<p>####（一）了解依赖注入的原理</p>
+<p>依赖注入各大语言都一样，相关资料：</p>
+<p>其中最需要看的是来自</p>
+<p>objc.io官网的博文 <a href="http://www.objc.io/issues/15-testing/dependency-injection/" target="_blank" rel="noopener">Dependency Injection</a> 和 Typhoon原创大神(Graham Lee)的文章 <a href="https://www.bignerdranch.com/blog/dependency-injection-ios/" target="_blank" rel="noopener">Dependency Injection, iOS and You</a> 不看后悔一辈子^_^</p>
+<p>1.<a href="http://blog.csdn.net/column/details/aopbrief.html" target="_blank" rel="noopener">CSDN专题系列–依赖注入及AOP简述</a></p>
+<p>2.<a href="http://blog.csdn.net/yqj2065/article/details/8510074" target="_blank" rel="noopener">某知名博主写的文章–依赖注入（Dependency Injection）模式</a></p>
+<p>3.<a href="http://kb.cnblogs.com/page/45266/4/" target="_blank" rel="noopener">来自博客园的深度理解–深度理解依赖注入</a></p>
+<p>4.<a href="http://blog.csdn.net/linshaolie/article/details/47037941#report" target="_blank" rel="noopener">国人翻译的国外牛人的文章—依赖注入——让iOS代码更简洁</a></p>
+<p>####（二）进阶内容了解和学习框架</p>
+<p>#####首先来看看有关objection的资料<br>资料比较少</p>
+<p>1.Limboy大大大神的–<a href="http://limboy.me/ios/2014/04/15/use-objection-to-decouple-ios-project.html" target="_blank" rel="noopener">使用objection来模块化开发iOS项目</a></p>
+<p>2.<a href="https://github.com/atomicobject/objection" target="_blank" rel="noopener">objection的官方github文档</a></p>
+<p>#####其次Typhoon的教程可能就比较详细了—-<a href="http://typhoonframework.org/" target="_blank" rel="noopener">官网</a></p>
+<p>1.<a href="https://github.com/appsquickly/Typhoon/wiki/Quick-Start" target="_blank" rel="noopener">首先来看官方github文档详细程度已经不需要其他教程了</a>😄😄😄</p>
+<p>2.<a href="http://datab.us/Search/Typhoon%2BFramework%2BPrimer%2BPlayListIDPLhU81D62nv-Yd5jCW9LRjI4_AfI5NwJhe" target="_blank" rel="noopener">关于Typhoon的视频教程</a></p>
+<p>3.<a href="http://blog.csdn.net/liangliang103377/article/details/47279819" target="_blank" rel="noopener">国外大神的教程整理 翻译（一）</a></p>
+<p>4.<a href="http://blog.csdn.net/liangliang103377/article/details/47279863" target="_blank" rel="noopener">国外大神的教程整理 翻译（二）</a></p>
+<p>5.<a href="http://blog.csdn.net/liangliang103377/article/details/47279899" target="_blank" rel="noopener">国外大神的教程整理 翻译（三）</a></p>
+<h2 id="DI-框架和参考文档"><a href="#DI-框架和参考文档" class="headerlink" title="DI 框架和参考文档"></a>DI 框架和参考文档</h2><p><a href="https://github.com/Swinject/Swinject" target="_blank" rel="noopener">https://github.com/Swinject/Swinject</a></p>
+<p>ios有关DI依赖注入的框架比较好用的有两个：<a href="https://github.com/atomicobject/objection" target="_blank" rel="noopener">objection</a> 和 <a href="https://github.com/appsquickly/Typhoon" target="_blank" rel="noopener">Typhoon</a></p>
+<p><a href="https://juejin.im/post/5cceaa3e6fb9a032143772fa" target="_blank" rel="noopener">Swift中依赖注入的解耦策略</a></p>
+<p><a href="https://juejin.im/post/5b968736f265da0a951ebd34" target="_blank" rel="noopener">iOS一次高效的依赖注入</a></p>
+<p><a href="https://tech.meituan.com/2018/11/08/ios-category-module-communicate.html" target="_blank" rel="noopener">Category 特性在 iOS 组件化中的应用与管控</a></p>
+<p><a href="https://github.com/jspahrsummers/libextobjc" target="_blank" rel="noopener">GitHub - jspahrsummers/libextobjc: A Cocoa library to extend the Objective-C programming language.</a> 里有一个 <code>EXTConcreteProtocol</code> 虽然没有直接叫做依赖注入，而是叫做混合协议，但是充分使用了 OC 动态语言的特性，不侵入项目，高度自动化，框架十分轻量，使用非常简单</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/klugjo/hexo-theme-clean-blog" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 christian_smile<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

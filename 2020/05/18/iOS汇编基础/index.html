@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="christian_smile">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="iOS汇编基础">
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="45°仰望星空">
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article">
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary">
+    
+
+    <!-- Title -->
+    
+    <title>iOS汇编基础 - 45°仰望星空</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Configurable Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/klugjo/hexo-theme-clean-blog">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>iOS汇编基础</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2020-05-18
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/iOS/">#iOS</a> <a href="/tags/汇编/">#汇编</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <blockquote>
+<p><strong>ARM64汇编为了提高访问效率要求按照16字节进行对齐</strong></p>
+</blockquote>
+<h2 id="iOS-计算机基本概念"><a href="#iOS-计算机基本概念" class="headerlink" title="iOS 计算机基本概念"></a>iOS 计算机基本概念</h2><h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>如果你还不知道什么是寄存器，建议先Google一下。 这里不再详细说明，寄存器是CPU中的高速存储单元，要比内存中存取要快的多。</p>
+<p>这里说明一下arm64有哪些寄存器：</p>
+<h4 id="R0-–-R30"><a href="#R0-–-R30" class="headerlink" title="R0 – R30"></a><strong>R0 – R30</strong></h4><p><code>r0 - r30</code> 是31个通用整形寄存器。每个寄存器可以存取一个64位大小的数。 当使用 <code>x0 - x30</code>访问时，它就是一个64位的数。当使用 <code>w0 - w30</code>访问时，访问的是这些寄存器的低32位，如图：</p>
+<p><img src="https://blog.cnbluebox.com/images/arm64-start/1.png" alt="1.png"></p>
+<p>其实通用寄存器有32个，第32个寄存器x31，在指令编码中，使用来做 <code>zero register</code>, 即<code>ZR</code>, <code>XZR/WZR</code>分别代表64/32位，<code>zero register</code>的作用就是0，写进去代表丢弃结果，拿出来是0.</p>
+<p>其中 <code>r29</code> 又被叫做 <code>fp</code> (frame pointer). <code>r30</code> 又被叫做 <code>lr</code> (link register)。其用途会在下一节《栈》中讲到。</p>
+<h4 id="SP"><a href="#SP" class="headerlink" title="SP"></a><strong>SP</strong></h4><p>SP寄存器其实就是 x31，在指令编码中，使用 <code>SP/WSP</code>来进行对SP寄存器的访问。</p>
+<h4 id="PC"><a href="#PC" class="headerlink" title="PC"></a><strong>PC</strong></h4><p>PC寄存器中存的是当前执行的指令的地址。在arm64中，软件是不能改写PC寄存器的。</p>
+<h4 id="V0-–-V31"><a href="#V0-–-V31" class="headerlink" title="V0 – V31"></a><strong>V0 – V31</strong></h4><p><code>V0 - V31</code> 是向量寄存器，也可以说是浮点型寄存器。它的特点是每个寄存器的大小是 128 位的。 分别可以用<code>Bn Hn Sn Dn Qn</code>的方式来访问不同的位数。如图：</p>
+<p><img src="https://blog.cnbluebox.com/images/arm64-start/2.png" alt="2.png"></p>
+<p><code>Bn Hn Sn Dn Qn</code>可以这样理解记忆, 基于一个word是32位，也就是4Byte大小：</p>
+<blockquote>
+<p>Bn: 一个Byte的大小<br>Hn: half word. 就是16位<br>Sn: single word. 32位<br>Dn: double word. 64位<br>Qn: quad word. 128位</p>
+</blockquote>
+<h4 id="SPRs"><a href="#SPRs" class="headerlink" title="SPRs"></a><strong>SPRs</strong></h4><p>SPRs是状态寄存器，用于存放程序运行中一些状态标识。不同于编程语言里面的if else.在汇编中就需要根据状态寄存器中的一些状态来控制分支的执行。状态寄存器又分为 <code>The Current Program Status Register (CPSR)</code> 和 <code>The Saved Program Status Registers (SPSRs)</code>。 一般都是使用<code>CPSR</code>， 当发生异常时， <code>CPSR</code>会存入<code>SPSR</code>。当异常恢复，再拷贝回<code>CPSR</code>。</p>
+<p>还有一些系统寄存器，还有 <code>FPSR</code> <code>FPCR</code>是浮点型运算时的状态寄存器等。基本了解上面这些寄存器就可以了。</p>
+<p>CPSR (Current Program Status Register)是程序状态寄存器，cpsr 是一个32bit 的寄存器<br><img src="https://images.xiaozhuanlan.com/photo/2018/54be72f36471426505b9e412c31fd0eb.jpeg" alt="img"></p>
+<h5 id="N"><a href="#N" class="headerlink" title="N"></a>N</h5><ul>
+<li>Negative 标志位,当用两个补码表示的带符号数进行运算时，N=1 表示运算的结果为负数；N=0 表示运算的结果为正数或零.</li>
+</ul>
+<h5 id="Z"><a href="#Z" class="headerlink" title="Z"></a>Z</h5><ul>
+<li>Zero 标志位,Z=1 表示运算的结果为零；Z=0表示运算的结果为非零.如果结果为零，通常表示比较的结果相等。</li>
+</ul>
+<h5 id="C"><a href="#C" class="headerlink" title="C"></a>C</h5><ul>
+<li>Carry 标志位，有以下3种情况<br>1、无符号加法运算和cmn指令，如果产生进位，则C=1，否则C=0；<br>2、无符号减法运算和cmp指令，如果产生借位，则C=0，否则C=1；<br>3、进行移位操作的时候，C中保存最后一位移出的值。<br>说明：当一条指令中同时含有算术运算指令和移位指令时，影响C的值是算术运算而不是移位操</li>
+</ul>
+<h5 id="V"><a href="#V" class="headerlink" title="V"></a>V</h5><ul>
+<li>溢出标志位。进行有符号运算时如果发生错误，则V=1，否则V=0。</li>
+</ul>
+<p>一些指令如cmn、cmp等会无条件的刷新cpsr中的条件标志位，其他指令必须要在指令后面加上S后缀才会改变CPSR中的条件标志位。比如 <code>add x0, x0, #0x1</code> 写成 <code>adds x0, x0, #0x1</code></p>
+<p>你可以在<a href="http://infocenter.arm.com/help/topic/com.arm.doc.ihi0042f/IHI0042F_aapcs.pdf" target="_blank" rel="noopener">ARM文档</a>里了解更多关于ARM调用约定的信息</p>
+<p>想知道更多关于指令的信息，可以看看<a href="http://infocenter.arm.com/help/topic/com.arm.doc.qrc0001l/QRC0001_UAL.pdf" target="_blank" rel="noopener">这个文档</a>，或者<a href="http://read.pudn.com/downloads151/sourcecode/embed/654540/Cortex_M3_Guide/chpt04-05.pdf" target="_blank" rel="noopener">看其他的中文</a></p>
+<h2 id="反调试"><a href="#反调试" class="headerlink" title="反调试"></a>反调试</h2><blockquote>
+<p><a href="http://jmpews.github.io/2017/08/09/darwin/反调试及绕过/" target="_blank" rel="noopener">反调试及绕过</a></p>
+</blockquote>
+<h3 id="反调试-1"><a href="#反调试-1" class="headerlink" title="反调试"></a>反调试</h3><p>以反调试为例，我们知道，通过调用ptrace函数可以阻止调试器依附。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptrace(31, 0, 0, 0)</span><br></pre></td></tr></table></figure>
+<p>这种方式能够被函数hook轻易破解，例如使用facebook的<a href="https://github.com/facebook/fishhook" target="_blank" rel="noopener">fishhook</a>。</p>
+<p>###asm</p>
+<p>// volatile修饰符能够防止汇编指令被编译器忽略</p>
+<h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p>// volatile修饰符能够防止汇编指令被编译器忽略</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 使用inline方式将函数在调用处强制展开，防止被hook和追踪符号</span><br><span class="line">static __attribute__((always_inline)) void anti_debug() &#123;</span><br><span class="line">// 判断是否是ARM64处理器指令集</span><br><span class="line">#ifdef __arm64__</span><br><span class="line">    // volatile修饰符能够防止汇编指令被编译器忽略</span><br><span class="line">    __asm__ __volatile__(</span><br><span class="line">                         &quot;mov x0, #31\n&quot;</span><br><span class="line">                         &quot;mov x1, #0\n&quot;</span><br><span class="line">                         &quot;mov x2, #0\n&quot;</span><br><span class="line">                         &quot;mov x3, #0\n&quot;</span><br><span class="line">                         &quot;mov x16, #26\n&quot;</span><br><span class="line">                         &quot;svc #0x80\n&quot;</span><br><span class="line">                         );</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中x0-x3存储的为函数入参，x16存储的为函数编号，通过Apple提供的<a href="https://www.theiphonewiki.com/wiki/Kernel_Syscalls" target="_blank" rel="noopener">System Call Table</a> 可以查出ptrace的编号为26，最后一句指令发起了系统调用。 通过使用<strong>asm</strong>指令能够将汇编代码嵌入函数中，构成反调试方法。</p>
+<h1 id="iOS汇编"><a href="#iOS汇编" class="headerlink" title="iOS汇编"></a>iOS汇编</h1><h2 id="GNU平台无关"><a href="#GNU平台无关" class="headerlink" title="GNU平台无关"></a>GNU平台无关</h2><h3 id="符号定义伪指令"><a href="#符号定义伪指令" class="headerlink" title="符号定义伪指令"></a>符号定义伪指令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.global`,`.local`,`.set`,`.equ</span><br></pre></td></tr></table></figure>
+<h4 id="global"><a href="#global" class="headerlink" title=".global"></a>.global</h4><p>使得符号对连接器可见，变为对整个工程可用的全局变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.global symbol</span><br></pre></td></tr></table></figure>
+<p><code>.globl</code> 可以让一个标签对链接器可见，可以供其他链接对象模块使用。 换句话说 <code>.global _my_func</code> 可以在代码中调用到 <code>my_func</code>。</p>
+<h4 id="local"><a href="#local" class="headerlink" title=".local"></a>.local</h4><p>表示符号对外部不可见，只对本文件可见</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.local symbol</span><br></pre></td></tr></table></figure>
+<h4 id="set"><a href="#set" class="headerlink" title=".set"></a>.set</h4><p>给一个全局变量或局部变量赋值，和<code>.equ</code>的功能一样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.set symbol expr</span><br><span class="line">.set start, 0x40</span><br><span class="line">.set start, 0x50</span><br><span class="line">mov r1, #start      ;r1里面是0x50</span><br></pre></td></tr></table></figure>
+<h4 id="equ"><a href="#equ" class="headerlink" title=".equ"></a>.equ</h4><p>和<code>.set</code>一样，只是格式不同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">symbol .equ  expr</span><br><span class="line">start  .equ, 0x40</span><br><span class="line">start  .equ, 0x50</span><br><span class="line">mov r1, #start      ;r1里面是0x50</span><br></pre></td></tr></table></figure>
+<h3 id="数据定义伪指令"><a href="#数据定义伪指令" class="headerlink" title="数据定义伪指令"></a>数据定义伪指令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.byte`,`.short`,`.long`,`.quad`,`.float`,`.string`,`.asciz`,`.ascii`,`.rept</span><br></pre></td></tr></table></figure>
+<h4 id="byte"><a href="#byte" class="headerlink" title=".byte"></a>.byte</h4><p>在存储器中分配<strong>1个字节</strong>，用指定的数据对存储单元进行初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">label:  .byte   expr    ;label是程序标号，expr可以是-128~255的数字，也可是字符</span><br><span class="line">a:  .byte   #1  ;等价于C中的char a=1;</span><br></pre></td></tr></table></figure>
+<h4 id="short"><a href="#short" class="headerlink" title=".short"></a>.short</h4><p>在存储器中分配<strong>2个字节</strong>，用指定的数据对存储单元进行初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a: .short 0x1234</span><br></pre></td></tr></table></figure>
+<h4 id="word-long"><a href="#word-long" class="headerlink" title=".word / .long"></a>.word / .long</h4><p>在存储器中分配<strong>4个字节</strong>，用指定的数据对存储单元进行初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a: .word 0x12345678</span><br></pre></td></tr></table></figure>
+<h4 id="long"><a href="#long" class="headerlink" title=".long"></a>.long</h4><p>在存储器中分配<strong>个字节</strong>，用指定的数据对存储单元进行初始化</p>
+<h4 id="quad"><a href="#quad" class="headerlink" title=".quad"></a>.quad</h4><p>在存储器中分配<strong>8个字节</strong>，用指定的数据对存储单元进行初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a: .quad 0x12345678 ;等价于C中的long a=0x1234567812345678</span><br></pre></td></tr></table></figure>
+<h4 id="float"><a href="#float" class="headerlink" title=".float"></a>.float</h4><p>在存储器中分配<strong>4个字节</strong>，用指定的<strong>浮点</strong>数据对存储单元进行初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a: .float 1.11</span><br></pre></td></tr></table></figure>
+<h4 id="space-skip"><a href="#space-skip" class="headerlink" title=".space/.skip"></a>.space/.skip</h4><p>用于分配一块连续的存储区域并初始化为指定的值，如果后面的填充值省略不写则在后面填充为0;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">label: .space size,expr     ;expr可以是4字节以内的浮点数 </span><br><span class="line">a:  space 8, 0x1</span><br></pre></td></tr></table></figure>
+<h4 id="string"><a href="#string" class="headerlink" title=".string"></a>.string</h4><p>定义一个字符串，默认是string8，还有string16，string32，string64</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a: .space &quot;hello world!&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="rept"><a href="#rept" class="headerlink" title=".rept"></a>.rept</h4><p>重复执行接下来的指令，以.rept开始，以.endr结束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.rept cnt   ;cnt是重复次数</span><br><span class="line">...</span><br><span class="line">.endr</span><br></pre></td></tr></table></figure>
+<p><code>.rept</code> 和 <code>.endr</code> 是一组循环伪指令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func_1:</span><br><span class="line">.rept 5</span><br><span class="line">add x0, x0, x1</span><br><span class="line">.endr</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+<p>上述指令得到内容如下： <img src="https://blog.dianqk.org/assets/img/trampolinehook-study-notes-4.8d465430.png" alt="img"> 生成了 5 个连续的 <code>add</code> 指令。</p>
+<h3 id="汇编控制伪操作"><a href="#汇编控制伪操作" class="headerlink" title="汇编控制伪操作"></a>汇编控制伪操作</h3><p>流程控制伪指令主要yy<code>.if .else .endif</code> <code>.macro .endm .exitm</code></p>
+<h4 id="if-else-endif"><a href="#if-else-endif" class="headerlink" title=".if .else .endif"></a>.if .else .endif</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.if logical-expression</span><br><span class="line">...</span><br><span class="line">.elseif logical-expression2</span><br><span class="line">...</span><br><span class="line">.else</span><br><span class="line">...</span><br><span class="line">.endif</span><br></pre></td></tr></table></figure>
+<h4 id="macro-endm-exitm"><a href="#macro-endm-exitm" class="headerlink" title=".macro .endm .exitm"></a>.macro .endm .exitm</h4><p>该伪指令可以将一段代码定义为一个整体，称为宏指令，然后就可以在程序中通过宏指令多次调用该段代码，而<code>.exitm</code>指令用来退出当前的宏指令，宏指令可以使用一个或多个参数，当宏操作被展开时，这些参数被相应的值替换。<br>包含在<code>.macro</code>和<code>。endm</code>之间的指令序列称为宏定义体。在宏定义体的第一行应声明宏的原型，包含宏名所需的参数，然后就可以在汇编程序中通过宏名来调用该指令序列，在源程序被编译时，汇编器将宏调用展开，用宏定义中的指令序列代替程序中的宏调用，并将实际参数的值传递给宏定义中的形式参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.macro macroname macargs ...</span><br><span class="line">;code</span><br><span class="line">.endm</span><br></pre></td></tr></table></figure>
+<h3 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.align      用于使程序当前位置满足一定的对齐方式</span><br><span class="line">.section    用来定义一个段的伪指令</span><br><span class="line">.data       用来定义一个数据段</span><br><span class="line">.text       用来定义一个代码段</span><br><span class="line">.include    用来包含一个头文件   </span><br><span class="line">.arm        定义以下代码使用arm指令集编译</span><br><span class="line">.code 32    同.arm</span><br><span class="line">.code 16    同.thumb</span><br><span class="line">.thumb      定义以下代码使用thumb指令集编译</span><br><span class="line">.extern     用于声明一个外部符号，用于兼容性其他汇编</span><br><span class="line">.weak       用于声明一个弱符号，如果这个符号没有定义，编译就忽略，而不会报错</span><br><span class="line">.end        表示汇编结束</span><br></pre></td></tr></table></figure>
+<h4 id="text"><a href="#text" class="headerlink" title=".text"></a>.text</h4><p><code>.text</code> 用于声明以下是代码段。</p>
+<h4 id="align"><a href="#align" class="headerlink" title=".align"></a>.align</h4><p><code>.align</code> 用于将指令对齐到内存地址，对齐位置为参数的 2 的幂次方。 以 <code>.align 10</code> 举例，在没有添加对齐时：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func_1:</span><br><span class="line">ret</span><br><span class="line">func_2:</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+<p>得到的结果，两个指令构成了连续的地址： <img src="https://blog.dianqk.org/assets/img/trampolinehook-study-notes-1.90fdbc4b.png" alt="img"></p>
+<p>在 <code>func_1</code> 和 <code>func_2</code> 之间加入 <code>.align 10</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func_1:</span><br><span class="line">ret</span><br><span class="line">.align 10</span><br><span class="line">func_2:</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+<p>得到如下结果，如果 <code>.align</code> 只是个普通的指令，那 <code>func_2</code> 的 <code>ret</code> 对应地址应当为 <code>0x0000000100008060</code>，这里却变成了 <code>0x000000010000840</code>，<code>0x000000010000840</code>刚好是 2^10 的倍数。 <img src="https://blog.dianqk.org/assets/img/trampolinehook-study-notes-2.d1447eed.png" alt="img"></p>
+<p>在本文中，会有一个妙用点，我们在 <code>func_1</code> 也加入 <code>.align 10</code>： <img src="https://blog.dianqk.org/assets/img/trampolinehook-study-notes-3.77e22018.png" alt="img"> 可以看到 <code>0x8800 - 0x8400 = 0x400</code>，0x400 刚好是 2^10，这说明我只要知道 <code>func_2</code> 的 <code>ret</code> 指令内存地址，就可以得到 <code>func_1</code> 的 <code>ret</code> 指令地址。</p>
+<h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><p>如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_my_label:</span><br><span class="line">add x0, x0, x1</span><br></pre></td></tr></table></figure>
+<p><code>_my_label</code> 会指向 <code>add x0, x0, x1</code> 的地址，用于辅助标记命令地址。</p>
+<h2 id="GNU平台相关"><a href="#GNU平台相关" class="headerlink" title="GNU平台相关"></a>GNU平台相关</h2><h4 id="adr"><a href="#adr" class="headerlink" title="adr"></a>adr</h4><p>把标签所在的地址加载到寄存器中，这个指令将基于PC相对偏移的地址值或基于寄存器相对偏移的地址值读取到寄存器中。当地址值是字节对齐的时候，取值范围是-255~255B;当地址值是字对齐的时候，取值范围为-1020~1020B。当地址值是16字节对齐时，取值范围更大。 该指令等价于<code>add , pc , offset</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adr &lt;reg&gt; &lt;label&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="adrl"><a href="#adrl" class="headerlink" title="adrl"></a>adrl</h4><p>用于将中等范围地址读取到寄存器中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ADRL &lt;reg&gt; &lt;label&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="adrp"><a href="#adrp" class="headerlink" title="adrp"></a>adrp</h4><h4 id="stur"><a href="#stur" class="headerlink" title="stur"></a>stur</h4><h4 id="ldr"><a href="#ldr" class="headerlink" title="ldr"></a>ldr</h4><p>装载一个32位的常数和一个地址寄存器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LDR reg, =expr</span><br></pre></td></tr></table></figure>
+<p>reg:目标寄存器<br>expr：32位常量表达式。汇编器根据expr的取值情况，对LDR伪指令做如下处理:</p>
+<ol>
+<li>当expr表示的指令地址值没有超过MOV指令或MVN指令的地址取值范围时，汇编器用一对MOV和MVN代替LDR指令</li>
+<li>当超过了的时候，汇编器将常数放入缓存吃，同时用一条基于PC的LDR读取该常数</li>
+</ol>
+<h3 id="ARM64-指令"><a href="#ARM64-指令" class="headerlink" title="ARM64 指令"></a>ARM64 指令</h3><h4 id="nop"><a href="#nop" class="headerlink" title="nop"></a>nop</h4><p>什么也不做的指令，愣一下。没什么用途，但可以偏移指令地址。 <img src="https://blog.dianqk.org/assets/img/trampolinehook-study-notes-5.4799e6e3.png" alt="img"> 可以看到 nop 也占了 4 个字节，原本 <code>0000000100013fe</code> 对应的指令应当是 ret。</p>
+<h4 id="sub"><a href="#sub" class="headerlink" title="sub"></a>sub</h4><p>减法指令，可以拿来做一些地址偏移计算，用法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sub x1, x1, #0x8 ;相当于 x1 = x1 - 0x8</span><br><span class="line">sub x2, x1, x2 ;相当于 x2 = x1 - x2</span><br></pre></td></tr></table></figure>
+<h4 id="mov"><a href="#mov" class="headerlink" title="mov"></a>mov</h4><p>赋值指令，用法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov x1, x0 ;相当于 x1 = x0</span><br></pre></td></tr></table></figure>
+<h4 id="str-和-stp"><a href="#str-和-stp" class="headerlink" title="str 和 stp"></a>str 和 stp</h4><p>str 全称是store register，即将寄存器的值存储到内存中， 因此第一个参数都是寄存器，第二个参数都是内存地址，注意这里的数字都是以字节为单位的偏移量</p>
+<p>两个入栈指令，stp 可以同时操作两个寄存器。</p>
+<p>这里涉会及到一些寻址的格式，有 3 种方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[x10, #0x10]      // signed offset。 意思是从 x10 + 0x10的地址取值</span><br><span class="line">[sp, #-16]!       // pre-index。  意思是从 sp-16地址取值，取值完后在把 sp-16  writeback 回 sp，即开辟一段新栈空间</span><br><span class="line">[sp], #16         // post-index。 意思是从 sp 地址取值，取值完后在把 sp+16 writeback 回 sp，即释放一些栈空间</span><br></pre></td></tr></table></figure>
+<p>结合上面几种寻址方式，搭配入栈指令，用法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str x8, [sp, #-16]! ;将 x8 存到 sp - 16 的位置，并将 sp -= 16，</span><br><span class="line">stp x4, x5, [sp, #-16]! ;将 x4 x5 的值存到 sp - 16 的位置，并将 sp -= 16</span><br></pre></td></tr></table></figure>
+<h4 id="ldr-和-ldp"><a href="#ldr-和-ldp" class="headerlink" title="ldr 和 ldp"></a>ldr 和 ldp</h4><p>ldr的全称是load register，即将内存中的值读到寄存器，因此他们的第一个参数都是寄存器，第二个参数都是内存地址，注意这里的数字都是以字节为单位的偏移量</p>
+<p>两个出栈指令，ldp 可以同时操作两个寄存器，用法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ldr x8, [sp], #16 ;将 sp 位置的值取出来，存入 x8 中，并将 sp += 16</span><br><span class="line">ldp x4, x5, [sp], #16 ;将 sp 位置的值取出来，存入 x4 x5 中，并将 sp += 16</span><br></pre></td></tr></table></figure>
+<h4 id="LDXR-amp-STXR"><a href="#LDXR-amp-STXR" class="headerlink" title="LDXR &amp; STXR"></a>LDXR &amp; STXR</h4><hr>
+<p>LDXR 即 LDR 的 Exclusive 版本，它的用法与 LDR 完全一致，区别在于它含有 Load-Exclusive 语义，即将读取的内存单元状态置为 Exclusive。</p>
+<p>STXR 即 STR 的 Exclusive 版本，由于需要是否 Store 成功，他相比于 STR 多了一个 32 位寄存器的参数用于接收执行结果，用法为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">STXR  Ws, Xt, [Xn|SP&#123;,#0&#125;]</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>即尝试将 <code>Xt</code> 写入 <code>[Xn|SP{,#0}]</code>，如果写入成功则将 0 写入 Ws，否则将非 0 写入，它常常和 CBZ 指令搭配，如果写入失败则跳回到 LDXR，重新执行一遍 LDXR &amp; STXR 操作，直至成功</p>
+<h4 id="LDAXR-amp-STLXR"><a href="#LDAXR-amp-STLXR" class="headerlink" title="LDAXR &amp; STLXR"></a>LDAXR &amp; STLXR</h4><hr>
+<p>除了 Exclusive 语义外，LDXR &amp; STXR 还有其 Acquire-Release 语义的 LDAXR &amp; STLXR 版本，用于保证执行顺序。</p>
+<p>对于单纯的 Atomic Add 操作，前者已经足够；如果涉及到类似于 <a href="https://juejin.im/post/5d9891abf265da5b926bc2b7" target="_blank" rel="noopener">上一篇文章</a> 提到的读写等待操作，则需要通过后者强保证不被乱序执行干扰。</p>
+<h4 id="CAS-amp-CASA-amp-CASAL"><a href="#CAS-amp-CASA-amp-CASAL" class="headerlink" title="CAS &amp; CASA &amp; CASAL"></a>CAS &amp; CASA &amp; CASAL</h4><hr>
+<p>ARM 提供了多条指令直接完成 Compare and Swap 操作，其中 CAS 是最基础的版本，它的使用方法如下[4]：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CAS Xs, Xt, [Xn|SP&#123;,#0&#125;] ; 64-bit, no memory ordering</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>尝试将 <code>Xt</code> 与内存中的值进行交换，首先比较 <code>Xs</code> 是否等于内存中的 <code>[Xn|SP{,#0}]</code>，如果相等则将 <code>Xt</code> 写入内存，同时将内存中的值写回到 <code>Xs</code>，因此只要在 CAS 之后判断 <code>Xs</code> 是否等于 <code>Xt</code> 即可知道是否写入成功，如果写入失败则 <code>Xs</code> 的值应为原始值，即 <code>Xs</code> ≠ <code>Xt</code>，如果写入成功则内存中的值已被更新，即 <code>Xs</code> = <code>Xt</code>。</p>
+<p>下面的例子采用 CAS 方式同样实现了原子加一操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">; extern int cas_add(int *val);</span><br><span class="line">_cas_add:</span><br><span class="line">mov x9, x0</span><br><span class="line">ldr w10, [x9]</span><br><span class="line">mov w11, w10 ; w11 is used to check cas status</span><br><span class="line">add w10, w10, #1</span><br><span class="line">cas w11, w10, [x9]</span><br><span class="line">cmp w10, w11 ; if cas succeed, w11 = &lt;new value in memory&gt; = w10</span><br><span class="line">b.ne _cas_add</span><br><span class="line">mov w0, w10</span><br><span class="line">ret</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><strong>注意：为了在 iOS 系统上编译包含 CAS 指令的内容，需要给 .s 文件添加一个 Compile Flag: <code>-march=armv8.1-a</code></strong>[5]。</p>
+<blockquote>
+<p>同样的，CAS 也有其含有 Acquire-Release 语义的版本，分别是含有 Acquire 语义的 CASA, 含有 Release 语义的 CASL，和同时包含 Acquire-Release 两种语义的 CASAL。</p>
+</blockquote>
+<h4 id="br"><a href="#br" class="headerlink" title="br"></a>br</h4><hr>
+<p>跳转指令，直接跳转到指定地址，跳转完不返回。有些类似在一个函数末尾调用了另外的函数。用法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">br x10 ;跳转到 x10 中保存的地址</span><br></pre></td></tr></table></figure>
+<h4 id="bl"><a href="#bl" class="headerlink" title="bl"></a>bl</h4><p>跳转指令，将 bl 的下一个指令地址保存到 lr 寄存器，然后跳转到指定地址，因为将下一个指令保存到 lr 了，所以跳转完会回来执行下一个指令。用法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov x0, x1</span><br><span class="line">bl 0x100221232 ;跳转到 0x100221232，执行完毕回来执行下一条指令</span><br><span class="line">sub x0, x0, 0x10</span><br></pre></td></tr></table></figure>
+<h4 id="blr"><a href="#blr" class="headerlink" title="blr"></a>blr</h4><p>跳转指令，和 bl 类似，但可以使用动态地址，可以跳转到寄存器的值保存的地址，用法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov x8, 0x100221232</span><br><span class="line">blr x8</span><br></pre></td></tr></table></figure>
+<h4 id="b-ne"><a href="#b-ne" class="headerlink" title="b.ne"></a>b.ne</h4><h4 id="lr"><a href="#lr" class="headerlink" title="lr"></a>lr</h4><h4 id="csel"><a href="#csel" class="headerlink" title="csel"></a>csel</h4><p> <code>csel</code> 指令，该指令是 ARM 中的三目运算：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">csel   x21, x21, xzr, ne</span><br><span class="line"></span><br><span class="line">csel  Wd, Wn, Wm, cond </span><br><span class="line"># 等价于</span><br><span class="line">Wd = cond ? Wn : Wm</span><br></pre></td></tr></table></figure>
+<h4 id="cbz"><a href="#cbz" class="headerlink" title="cbz"></a>cbz</h4><h4 id="ret"><a href="#ret" class="headerlink" title="ret"></a>ret</h4><p>返回指令，子程序（函数调用）返回指令，返回到寄存器 lr 保存的地址。</p>
+<h3 id="函数、汇编、寄存器"><a href="#函数、汇编、寄存器" class="headerlink" title="函数、汇编、寄存器"></a>函数、汇编、寄存器</h3><p>汇编指令是对寄存器和栈进行各种操作，如何对应到我们日常编写的函数是关键。 寄存器相当于全局变量，在汇编中没有传入参数这样的形式，但我们可以用寄存器进行传递参数。为此，我们进行了一系列约定：</p>
+<ul>
+<li>x0 - x7：用于传递子程序参数和结果，使用时不需要保存，多余参数采用堆栈传递，子程序返回结果写入到 x0</li>
+<li>x8：用于保存子程序返回地址</li>
+<li>x9 - x15：临时寄存器</li>
+<li>x16 - x17：子程序内部调用寄存器</li>
+<li>x18：平台寄存器，它的使用与平台相关</li>
+<li>x19 - x28：临时寄存器</li>
+<li>x29：帧指针寄存器 fp（栈底指针），用于连接栈帧</li>
+<li>x30：链接寄存器 lr，保存了子程序返回的地址</li>
+<li>x31：堆栈指针寄存器 sp</li>
+</ul>
+<p>连续调用多个子程序会面临寄存器不够用的问题，大家都要用 lr 作为返回地址，都要用 x0 传递参数。 栈来了！如果后面的操作会对寄存器有修改，先入栈保存起来，等执行完相关操作，在出栈读出来就好了。 比如 lr 是必须入栈的寄存器（当然你脾气硬，不怕其他寄存器被修改，保存到其他寄存器也可以，但一定别这样写，万一啥时候被修改了呢），如果没有保存 lr，调用子程序后，lr 不是当初的 lr 了，会找不到返回的位置。</p>
+<p>如下汇编没有保存 lr：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">add_func:</span><br><span class="line">add x0, x0, x1</span><br><span class="line">ret</span><br><span class="line"></span><br><span class="line">.globl _my_add_func</span><br><span class="line">_my_add_func: ;没有保存 lr，调用后回不去了</span><br><span class="line">bl add_func</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+<p>调用后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FOUNDATION_EXTERN int my_add_func(int x, int y);</span><br><span class="line"></span><br><span class="line">printf(&quot;开始执行 my_add_func\n&quot;);</span><br><span class="line">int result = my_add_func(1, 1);</span><br><span class="line">printf(&quot;执行 my_add_func 结果: %d\n&quot;, result);</span><br></pre></td></tr></table></figure>
+<p>得到的输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">开始执行 my_add_func</span><br></pre></td></tr></table></figure>
+<p>为 <code>_my_add_func</code> 增加个 lr 入栈就行了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_my_add_func:</span><br><span class="line">str lr, [sp, #-16]!</span><br><span class="line">bl add_func</span><br><span class="line">ldr lr, [sp], #16</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+<p>此时得到的输出为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">开始执行 my_add_func</span><br><span class="line">执行 my_add_func 结果: 2</span><br></pre></td></tr></table></figure>
+<p>更复杂的调用场景，需要将更多的寄存器入栈，避免寄存器内容被污染。</p>
+<h2 id="内存屏障-volatile"><a href="#内存屏障-volatile" class="headerlink" title="内存屏障 volatile"></a>内存屏障 volatile</h2><hr>
+<p>内存屏障是一条指令，它能够明确地保证屏障之前的所有内存操作均已完成（可见）后，才执行屏障后的操作，但是它不会影响其他指令（非内存操作指令）的执行顺序。</p>
+<p>因此我们只要在 flag 置位前放置内存屏障，即可保证运算结果全部写入内存后才置位 flag，进而也就保证了逻辑的正确性。</p>
+<p>###放置内存屏障</p>
+<hr>
+<p>可以通过内联汇编的形式插入一个内存屏障：’’</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">calculate</span><span class="params">(FlagsCalculate *ctx)</span> </span>&#123;</span><br><span class="line">    ctx-&gt;a = (<span class="number">20</span> * mulA - mulB) / divC;</span><br><span class="line">    ctx-&gt;b = <span class="number">30</span> + addD;</span><br><span class="line">    <span class="keyword">for</span> (NSInteger i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">        ctx-&gt;a += i * mulA - mulB;</span><br><span class="line">        ctx-&gt;a *= divC;</span><br><span class="line">        ctx-&gt;b += i * mulB / mulA - mulB;</span><br><span class="line">        ctx-&gt;b /= divC;</span><br><span class="line">    &#125;</span><br><span class="line">    ctx-&gt;c = mulA + mulB * divC + <span class="number">120</span>;</span><br><span class="line">    ctx-&gt;d = addD + mulA + mulB + <span class="number">5</span>;</span><br><span class="line">    __asm__ __volatile__(<span class="string">"dmb sy"</span>);</span><br><span class="line">    ctx-&gt;e = <span class="number">1</span>;</span><br><span class="line">    ctx-&gt;f = <span class="number">1</span>;</span><br><span class="line">    ctx-&gt;g = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><code>__asm__ __volatile__(&quot;dmb sy&quot;)</code>，内存屏障限制了 CPU 乱序执行对正常逻辑的影响。</p>
+<h3 id="volatile-与内存屏障"><a href="#volatile-与内存屏障" class="headerlink" title="volatile 与内存屏障"></a>volatile 与内存屏障</h3><hr>
+<p>常常听说 volatile 是一个内存屏障，那么它的屏障作用是否与上述 DMB 指令一致呢，我们可以试着用 volatile 修饰 3 个 flag，再做一次实验：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">FlagsCalculate</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">int</span> b;</span><br><span class="line">    <span class="keyword">int</span> c;</span><br><span class="line">    <span class="keyword">int</span> d;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">int</span> e;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">int</span> f;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">int</span> g;</span><br><span class="line">&#125; FlagsCalculate;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>结果最后触发了断言异常，这是为何呢？<strong>因为 volatile 在 C 环境下仅仅是编译层面的内存屏障，仅能保证编译器不优化和重排被 volatile 修饰的内容</strong>，但是在 Java 环境下 volatile 具有 CPU 层面的内存屏障作用[4]。不同环境表现不同，这也是 volatile 让我们如此费解的原因。</p>
+<p>在 C 环境下，volatile 常常用来保证内联汇编不被编译优化和改变位置，例如我们通过内联汇编放置一个编译层面的内存屏障时，通过 <code>__volatile__</code> 修饰汇编代码块来保证内存屏障的位置不被编译器改变：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__asm__ __volatile__(&quot;&quot; ::: &quot;memory&quot;);</span><br></pre></td></tr></table></figure>
+<h3 id="volatile-相关-汇编命令"><a href="#volatile-相关-汇编命令" class="headerlink" title="volatile 相关 汇编命令"></a>volatile 相关 汇编命令</h3><h2 id="反汇编命令"><a href="#反汇编命令" class="headerlink" title="反汇编命令"></a>反汇编命令</h2><p>反汇编 <code>dis -a xxxx</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(lldb) dis -a 0x18c1391a8</span><br><span class="line">Foundation`+[NSUnitElectricPotentialDifference megavolts]:</span><br><span class="line">0x18c1391a8 &lt;+0&gt;: adrp   x16, 195909</span><br><span class="line">0x18c1391ac &lt;+4&gt;: ldr    x16, [x16, #0x8b8]</span><br><span class="line">0x18c1391b0 &lt;+8&gt;: br     x16</span><br></pre></td></tr></table></figure>
+<p>这里取出了一个符号地址存入 x16 来执行，我们来看看 x16 里到底是什么：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(lldb) p/x 0x18c139000 + (195909 &lt;&lt; 12) + 0x8b8</span><br><span class="line">(long) $3 = 0x00000001bbe7e8b8</span><br><span class="line">(lldb) memory read 0x00000001bbe7e8b8</span><br><span class="line">0x1bbe7e8b8: 80 23 15 8b 01 00 00 00 38 06 03 8b 01 00 00 00  .#......8.......</span><br><span class="line">0x1bbe7e8c8: f0 23 15 8b 01 00 00 00 1c 1c 15 8b 01 00 00 00  .#..............</span><br><span class="line">(lldb) dis -a 0x018b152380</span><br><span class="line">libsystem_platform.dylib`_platform_strlen:</span><br><span class="line">    0x18b152380 &lt;+0&gt;:  and    x1, x0, #0xfffffffffffffff0</span><br><span class="line">    0x18b152384 &lt;+4&gt;:  ldr    q0, [x1]</span><br></pre></td></tr></table></figure>
+<p>一顿操作后发现原来是 <code>strlen</code>，如果你一味地轻信 Xcode 显示的注释，分析就无法进行下去了，这告诉我们做事情一定要抱着怀疑的态度。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>Apple提供的<a href="https://www.theiphonewiki.com/wiki/Kernel_Syscalls" target="_blank" rel="noopener">System Call Table</a><br>ARM公司提供的<a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0802a/STUR_fpsimd.html" target="_blank" rel="noopener">官方文档</a><br><a href="https://zhuanlan.zhihu.com/c_142064221" target="_blank" rel="noopener">iOS调试进阶</a><br><a href="https://blog.cnbluebox.com/blog/2017/07/24/arm64-start/" target="_blank" rel="noopener">iOS开发同学的arm64汇编入门</a><br><a href="https://zhuanlan.zhihu.com/p/43526907" target="_blank" rel="noopener">volatile 与内存屏障总结</a></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/klugjo/hexo-theme-clean-blog" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 christian_smile<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

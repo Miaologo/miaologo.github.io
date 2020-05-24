@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="christian_smile">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="初识LLVM">
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="日常工作中的一些知识点记录和备份，用于后期查看">
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="45°仰望星空">
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article">
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary">
+    
+
+    <!-- Title -->
+    
+    <title>初识LLVM - 45°仰望星空</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Configurable Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/klugjo/hexo-theme-clean-blog">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>初识LLVM</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2020-05-18
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/iOS/">#iOS</a> <a href="/tags/LLVM/">#LLVM</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>学 LLVM Clang 能做什么？</p>
+<p>参考 <a href="http://clang.llvm.org/docs/Tooling.html" target="_blank" rel="noopener">http://clang.llvm.org/docs/Tooling.html</a></p>
+<ul>
+<li><code>语法树分析</code>、<code>语言转换</code>。libclang、libTooling。</li>
+</ul>
+<p>语言转换就是比如把 oc代码 转成 Swift代码，或者把 oc代码 转成 js代码。</p>
+<ul>
+<li>Clang 插件开发</li>
+</ul>
+<p>可以用来做代码检查（命名规范、代码规范），安装包瘦身等等各种事情。<br>编写插件可以参考官方教程<br><a href="http://clang.llvm.org/docs/ClangPlugins.html" target="_blank" rel="noopener">http://clang.llvm.org/docs/ClangPlugins.html</a><br><a href="http://clang.llvm.org/docs/ExternalClangExamples.html" target="_blank" rel="noopener">http://clang.llvm.org/docs/ExternalClangExamples.html</a><br><a href="http://clang.llvm.org/docs/RAVFrontendAction.html" target="_blank" rel="noopener">http://clang.llvm.org/docs/RAVFrontendAction.html</a></p>
+<p>滴滴的动态化方案 <code>DynamicCocoa</code> 就是使用了一个将 OC 源码转 JS 的插件来进行代码的转换. <br>鹅厂的动态化方案 <code>OCS</code> 是直接在端内写了个编译器.<br>可以搜索 《DynamicCocoa：滴滴 iOS 动态化方案的诞生与起航》 和 《OCS——史上最疯狂的iOS动态化方案》查看介绍。</p>
+<ul>
+<li>Pass 开发。</li>
+</ul>
+<p>可以用来做<code>代码优化</code>、<code>代码混淆</code>等。<br>官方 Pass 教程 <a href="https://llvm.org/docs/WritingAnLLVMPass.html" target="_blank" rel="noopener">https://llvm.org/docs/WritingAnLLVMPass.html</a></p>
+<ul>
+<li>开发新的编程语言</li>
+</ul>
+<p><a href="https://llvm-tutorial-cn.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">用LLVM开发新语言</a><br>原文：<a href="http://llvm.org/docs/tutorial/index.html" target="_blank" rel="noopener">http://llvm.org/docs/tutorial/index.html</a><br>译文：<a href="https://llvm-tutorial-cn.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">https://llvm-tutorial-cn.readthedocs.io/en/latest/index.html</a></p>
+<p><a href="https://kaleidoscope-llvm-tutorial-zh-cn.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="noopener">Kaileidoscope: LLVM Tutorial Chinese version</a><br>中文：<a href="https://kaleidoscope-llvm-tutorial-zh-cn.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="noopener">https://kaleidoscope-llvm-tutorial-zh-cn.readthedocs.io/zh_CN/latest/index.html</a></p>
+<p>还是说说 LLVM 到底是什么吧，LLVM的项目是一个模块化和可重复使用的编译器和工具技术的集合.LLVM 曾经是一个缩写词，现在不是，它就是这个项目的名称。<br>Clang 是 LLVM 的子项目，是 C，C++ 和 Objective-C 编译器。<br><br>再来一个更容易理解的说法，iOS 开发中 Objective-C 是 Clang / LLVM 来编译的。（swift 是 Swift / LLVM）</p>
+<hr>
+<p>传统的编译器最流行的设计是分三段，分别是前端(Frontend)，优化器(Optimizer)和后端(Backend).</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2018/84b13853e4a6b368bb4f487455629bc5.png" alt="img"></p>
+<p><code>前端(Frontend)</code>负责解析源代码，检查语法错误，并将其翻译为抽象的语法树（Abstract Syntax Tree）.也就是词法分析，语法分析，语义分析和生成中间代码。</p>
+<p><code>优化器(Optimizer)</code>负责进行各种转换尝试改进代码的运行时间.release 包比 debug 包体积小运行快，其中的一个原因就是优化器起作用。比如重复计算的消除。</p>
+<p><code>后端(Backend)</code>用来生成实际的机器码.</p>
+<p>这种设计有很多优点，但实际这一结构却从来没有被完美实现过。GCC 做的比较好，实现了很多前端和后端，支持了很多语言。但是有个缺陷，那就是他们是一个完整的可执行文件，没有把前端和后端分的太开，所以GCC 为了支持一门新的语言，或者支持一种新的平台，就变得比较困难。</p>
+<p>LLVM 就解决了上面的问题，因为它被设计为一组库,而不是一个编译器，如下图<br><img src="https://images.xiaozhuanlan.com/photo/2018/a4c50acc4f4babc085359c307c5734a3.png" alt="img"></p>
+<p>从上图中我们发现LLVM与GCC在三段式架构上并没有本质区别，也是分为前端、优化器和后端。但是，其设计最重要的方面是不同的前端、后端使用同一的中间代码 LLVM Intermediate Representation (LLVM IR) . 也就是图中的 LLVM Optimizer</p>
+<p>这种设计的好处就是，如果需要支持一种新的编程语言，那么只需要实现一个新的前端。<br>如果需要支持一种新的硬件设备，那么只需要实现一个新的后端。优化阶段是一个通用的阶段，它针对的是同一的LLVM IR,不论是支持新的编程语言，还是支持新的硬件设备，都不需要对优化阶段做修改。</p>
+<p>Clang 就是基于LLVM架构的C/C++/Objective-C编译器<code>前端</code>,如下图<br><img src="https://images.xiaozhuanlan.com/photo/2018/36c1d33576e23405162e03df2b388845.png" alt="img"><br>Clang 主要处理一些和具体机器无关的针对语言的分析操作.编译器的优化器部分和后端部分是LLVM后端，也可以直接叫 LLVM（狭义的LLVM），广义上LLVM 就是整个LLVM架构。</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2018/debbaa315c7647803c6b58875ae668f3.png" alt="img"></p>
+<p>看上面的图，左边是编程语言，最终是机器码，在我们Xcode 中编写的代码首先会经过 clang 这个编译器前端，他会生成中间代码（IR），这个中间代码又经过一系列的优化，这些优化就是 <code>Pass</code>，如果咱要编写中间代码优化代码的话，那就是编写<code>Pass</code>,最后就是生成机器码.<br>通过图也可以看出，<code>Pass</code> 是 LLVM 系统转化和优化的工作的一个节点，每个节点做一些工作，这些工作加起来就构成了 LLVM 整个系统的优化和转化。</p>
+<p>在编译一个源文件时，编译器的处理过程分为几个阶段。<br>用命令行查看一下OC源文件的编译过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ clang -ccc-print-phases main.m</span><br><span class="line"></span><br><span class="line">0: input, &quot;main.m&quot;, objective-c</span><br><span class="line"></span><br><span class="line">1: preprocessor, &#123;0&#125;, objective-c-cpp-output</span><br><span class="line"></span><br><span class="line">2: compiler, &#123;1&#125;, ir</span><br><span class="line"></span><br><span class="line">3: backend, &#123;2&#125;, assembler</span><br><span class="line"></span><br><span class="line">4: assembler, &#123;3&#125;, object</span><br><span class="line"></span><br><span class="line">5: linker, &#123;4&#125;, image</span><br><span class="line"></span><br><span class="line">6: bind-arch, &quot;x86_64&quot;, &#123;5&#125;, image</span><br></pre></td></tr></table></figure>
+<p>一共是7个阶段，<br>第0个阶段找到源代码，读入文件。<br>第1个阶段 preprocessor，预处理器，就是把头导入，宏定义给展开，包括 <code>#define</code>、 <code>#include</code>、 <code>#import</code>、 <code>#indef</code>、 <code>#pragma</code>。<br>第2阶段就是 compiler，编译器编译成 ir 中间代码。<br>第3阶段就是交给后端，来生成汇编代码（assembler）。<br>第4阶段是将汇编代码转换为目标对象文件<br>第5阶段是链接器,将多个目标对象文件合并为一个可执行文件 (或者一个动态库) 。<br>最后一阶段 生成可执行文件 :Mach-O</p>
+<p><strong>预处理（Preprocess）</strong><br>先看一下预处理阶段干了什么事情:<br>创建一个<code>main.m</code> 文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">#define TEN 10</span><br><span class="line"></span><br><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line"></span><br><span class="line">    int a = TEN;</span><br><span class="line"></span><br><span class="line">    int b = 8;</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;num = %d&quot;,a+b);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行下面命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ clang -E main.m</span><br></pre></td></tr></table></figure>
+<p>我们会发现导入了很多的头文件内容,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line"># 181 &quot;/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h&quot; 2 3</span><br><span class="line"></span><br><span class="line"># 1 &quot;/System/Library/Frameworks/Foundation.framework/Headers/FoundationLegacySwiftCompatibility.h&quot; 1 3</span><br><span class="line"></span><br><span class="line"># 185 &quot;/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h&quot; 2 3</span><br><span class="line"></span><br><span class="line"># 13 &quot;main.m&quot; 2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line"></span><br><span class="line">    int a = 10;</span><br><span class="line"></span><br><span class="line">    int b = 8;</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;num = %d&quot;,a+b);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到上面的预处理已经把宏替换了，并且导入了头文件。 main 函数上面的一大堆内容就是 Foundation.h 文件中的内容去替换 <code>#import</code> 这行代码,如果 Foundation.h 中也使用了类似的宏引入，则会按照同样的处理方式用各个宏对应的真正代码进行逐级替代。</p>
+<p>这也就是为什么人们主张头文件最好尽量少的去引入其他的类或库，因为引入的东西越多，编译器需要做的处理就越多。</p>
+<p>在 Xcode 中，可以通过这样的方式查看任意文件的预处理结果：<code>Product -&gt; Perform Action -&gt; Preprocess</code><br>当然，这个的结果和咱自己执行的命令看到的结果稍微有点不同，因为他带了很多参数。通过下图的方式查看<br><img src="https://images.xiaozhuanlan.com/photo/2018/97e5e98ed4b2bffaafd46c6ed3b54bfe.png" alt="img"></p>
+<p>涉及到导入头文件这块的不同， 是因为命令行会加上 <code>-fmodules</code>参数.<br>用咱iOS熟悉的表达方式是 <code>@import</code> 优于 <code>#import</code> 优于 <code>#include</code>。<br>如果在代码中写了 <code>#include</code> 导入语句，用 Xcode 预编译后，会自动变成 <code>@import Darwin.C.stdio</code>. 对 modules 具体描述以及命令可以查看 Clang 8 documentation 的 Modules 部分。<br><a href="http://clang.llvm.org/docs/Modules.html" target="_blank" rel="noopener">http://clang.llvm.org/docs/Modules.html</a></p>
+<p><strong>词法分析 (Lexical Analysis)</strong><br>在预处理之后，就要进行词法分析了，将预处理过的代码转化成一个个 Token，比如左括号、右括号、等于、字符串等等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -fmodules -fsyntax-only -Xclang -dump-tokens main.m</span><br></pre></td></tr></table></figure>
+<p>对clang 命令参数的简单说明<br><code>-fmodules</code> ：允许modules的语言特性<br><code>-fsyntax-only</code> : 防止编译器生成代码,只是语法级别的说明和修改<br><code>-Xclang</code>: 向 clang 编译器传递参数<br><code>-dump-tokens</code>: 运行预处理器,拆分内部代码段为各种<code>token</code></p>
+<p>下面是一段简单的 Objective-C hello word 程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int main() &#123;</span><br><span class="line"></span><br><span class="line">  NSLog(@&quot;hello, %@&quot;, @&quot;world&quot;);</span><br><span class="line"></span><br><span class="line">  return 0;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行词法分析命令后输出</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">$ clang -fmodules -fsyntax-only -Xclang -dump-tokens main.m</span><br><span class="line"></span><br><span class="line">int 'int'     [StartOfLine]  Loc=&lt;main.m:34:1&gt;</span><br><span class="line"></span><br><span class="line">identifier 'main'     [LeadingSpace] Loc=&lt;main.m:34:5&gt;</span><br><span class="line"></span><br><span class="line">l_paren <span class="string">'('</span>        Loc=&lt;main.m:<span class="number">34</span>:<span class="number">9</span>&gt;</span><br><span class="line"></span><br><span class="line">r_paren <span class="string">')'</span>        Loc=&lt;main.m:<span class="number">34</span>:<span class="number">10</span>&gt;</span><br><span class="line"></span><br><span class="line">l_brace <span class="string">'&#123;'</span>     [LeadingSpace] Loc=&lt;main.m:<span class="number">34</span>:<span class="number">12</span>&gt;</span><br><span class="line"></span><br><span class="line">identifier 'NSLog'     [StartOfLine] [LeadingSpace]   Loc=&lt;main.m:35:5&gt;</span><br><span class="line"></span><br><span class="line">l_paren <span class="string">'('</span>        Loc=&lt;main.m:<span class="number">35</span>:<span class="number">10</span>&gt;</span><br><span class="line"></span><br><span class="line">at <span class="string">'@'</span>        Loc=&lt;main.m:<span class="number">35</span>:<span class="number">11</span>&gt;</span><br><span class="line"></span><br><span class="line">string_literal '"hello, %@"'        Loc=&lt;main.m:35:12&gt;</span><br><span class="line"></span><br><span class="line">comma <span class="string">','</span>        Loc=&lt;main.m:<span class="number">35</span>:<span class="number">23</span>&gt;</span><br><span class="line"></span><br><span class="line">at <span class="string">'@'</span>     [LeadingSpace] Loc=&lt;main.m:<span class="number">35</span>:<span class="number">25</span>&gt;</span><br><span class="line"></span><br><span class="line">string_literal '"world"'        Loc=&lt;main.m:35:26&gt;</span><br><span class="line"></span><br><span class="line">r_paren <span class="string">')'</span>        Loc=&lt;main.m:<span class="number">35</span>:<span class="number">33</span>&gt;</span><br><span class="line"></span><br><span class="line">semi <span class="string">';'</span>        Loc=&lt;main.m:<span class="number">35</span>:<span class="number">34</span>&gt;</span><br><span class="line"></span><br><span class="line">return 'return'     [StartOfLine] [LeadingSpace]   Loc=&lt;main.m:36:5&gt;</span><br><span class="line"></span><br><span class="line">numeric_constant <span class="string">'0'</span>     [LeadingSpace] Loc=&lt;main.m:<span class="number">36</span>:<span class="number">12</span>&gt;</span><br><span class="line"></span><br><span class="line">semi <span class="string">';'</span>        Loc=&lt;main.m:<span class="number">36</span>:<span class="number">13</span>&gt;</span><br><span class="line"></span><br><span class="line">r_brace <span class="string">'&#125;'</span>     [StartOfLine]  Loc=&lt;main.m:<span class="number">37</span>:<span class="number">1</span>&gt;</span><br><span class="line"></span><br><span class="line">eof ''        Loc=&lt;main.m:37:2&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到，<code>int</code> 是一个Token，<code>（</code> 是一个Token,就连<code>,</code> <code>;</code>都是Token，每个 Token 都包含了对应的源码内容和其在源码中的位置。<br>这样一来，如果编译过程中遇到什么问题，clang 能够在源码中指出出错的具体位置.</p>
+<p><strong>语法分析 (Semantic Analysis)</strong><br>根据当前语言的语法，验证语法是否正确，并将之前生成的 Token 解析成一棵抽象语法树(abstract syntax tree – AST)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -fmodules -fsyntax-only -Xclang -ast-dump main.m</span><br></pre></td></tr></table></figure>
+<p><code>-ast-dump</code> : 构建抽象语法树AST,然后对其进行拆解和调试</p>
+<p>例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@interface World : NSObject</span><br><span class="line"></span><br><span class="line">- (void)hello;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation World</span><br><span class="line"></span><br><span class="line">- (void)hello &#123;</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;hello, world&quot;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line"></span><br><span class="line">    World* world = [World new];</span><br><span class="line"></span><br><span class="line">    [world hello];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行语法分析命令后输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">$ clang -fmodules -fsyntax-only -Xclang -ast-dump main.m</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">|-ImportDecl 0x7f9f151fa818 &lt;main.m:34:1&gt; col:1 implicit Foundation</span><br><span class="line"></span><br><span class="line">|-ObjCInterfaceDecl 0x7f9f151fc1e0 &lt;line:36:1, line:38:2&gt; line:36:12 World</span><br><span class="line"></span><br><span class="line">| |-super ObjCInterface 0x7f9f151fa908 &apos;NSObject&apos;</span><br><span class="line"></span><br><span class="line">| |-ObjCImplementation 0x7f9f151fc458 &apos;World&apos;</span><br><span class="line"></span><br><span class="line">| `-ObjCMethodDecl 0x7f9f151fc3d0 &lt;line:37:1, col:14&gt; col:1 - hello &apos;void&apos;</span><br><span class="line"></span><br><span class="line">|-ObjCImplementationDecl 0x7f9f151fc458 &lt;line:40:1, line:44:1&gt; line:40:17 World</span><br><span class="line"></span><br><span class="line">| |-ObjCInterface 0x7f9f151fc1e0 &apos;World&apos;</span><br><span class="line"></span><br><span class="line">| `-ObjCMethodDecl 0x7f9f151fc4f0 &lt;line:41:1, line:43:1&gt; line:41:1 - hello &apos;void&apos;</span><br><span class="line"></span><br><span class="line">|   |-ImplicitParamDecl 0x7f9f14824c38 &lt;&lt;invalid sloc&gt;&gt; &lt;invalid sloc&gt; implicit self &apos;World *&apos;</span><br><span class="line"></span><br><span class="line">|   |-ImplicitParamDecl 0x7f9f14824cc0 &lt;&lt;invalid sloc&gt;&gt; &lt;invalid sloc&gt; implicit _cmd &apos;SEL&apos;:&apos;SEL *&apos;</span><br><span class="line"></span><br><span class="line">|   `-CompoundStmt 0x7f9f14824e98 &lt;col:15, line:43:1&gt;</span><br><span class="line"></span><br><span class="line">|     `-CallExpr 0x7f9f14824e50 &lt;line:42:5, col:26&gt; &apos;void&apos;</span><br><span class="line"></span><br><span class="line">|       |-ImplicitCastExpr 0x7f9f14824e38 &lt;col:5&gt; &apos;void (*)(id, ...)&apos; &lt;FunctionToPointerDecay&gt;</span><br><span class="line"></span><br><span class="line">|       | `-DeclRefExpr 0x7f9f14824d20 &lt;col:5&gt; &apos;void (id, ...)&apos; Function 0x7f9f151fc588 &apos;NSLog&apos; &apos;void (id, ...)&apos;</span><br><span class="line"></span><br><span class="line">|       `-ImplicitCastExpr 0x7f9f14824e80 &lt;col:11, col:12&gt; &apos;id&apos;:&apos;id&apos; &lt;BitCast&gt;</span><br><span class="line"></span><br><span class="line">|         `-ObjCStringLiteral 0x7f9f14824dc0 &lt;col:11, col:12&gt; &apos;NSString *&apos;</span><br><span class="line"></span><br><span class="line">|           `-StringLiteral 0x7f9f14824d88 &lt;col:12&gt; &apos;char [13]&apos; lvalue &quot;hello, world&quot;</span><br><span class="line"></span><br><span class="line">|-FunctionDecl 0x7f9f1582dab8 &lt;line:45:1, line:49:1&gt; line:45:5 main &apos;int (int, char **)&apos;</span><br><span class="line"></span><br><span class="line">| |-ParmVarDecl 0x7f9f1582d858 &lt;col:10, col:14&gt; col:14 argc &apos;int&apos;</span><br><span class="line"></span><br><span class="line">| |-ParmVarDecl 0x7f9f1582d970 &lt;col:20, col:32&gt; col:27 argv &apos;char **&apos;:&apos;char **&apos;</span><br><span class="line"></span><br><span class="line">| `-CompoundStmt 0x7f9f14165100 &lt;col:35, line:49:1&gt;</span><br><span class="line"></span><br><span class="line">|   |-DeclStmt 0x7f9f1582dc70 &lt;line:47:5, col:31&gt;</span><br><span class="line"></span><br><span class="line">|   | `-VarDecl 0x7f9f1582dbd0 &lt;col:5, col:30&gt; col:12 used world &apos;World *&apos; cinit</span><br><span class="line"></span><br><span class="line">|   |   `-ObjCMessageExpr 0x7f9f1582dc40 &lt;col:20, col:30&gt; &apos;World *&apos; selector=new class=&apos;World&apos;</span><br><span class="line"></span><br><span class="line">|   `-ObjCMessageExpr 0x7f9f1582dce0 &lt;line:48:5, col:17&gt; &apos;void&apos; selector=hello</span><br><span class="line"></span><br><span class="line">|     `-ImplicitCastExpr 0x7f9f1582dcc8 &lt;col:6&gt; &apos;World *&apos; &lt;LValueToRValue&gt;</span><br><span class="line"></span><br><span class="line">|       `-DeclRefExpr 0x7f9f1582dc88 &lt;col:6&gt; &apos;World *&apos; lvalue Var 0x7f9f1582dbd0 &apos;world&apos; &apos;World *&apos;</span><br><span class="line"></span><br><span class="line">`-&lt;undeserialized declarations&gt;</span><br></pre></td></tr></table></figure>
+<p><code>main</code> 函数在 <code>FunctionDecl</code> 节点<br><code>ParmVarDecl</code> 节点对应着 main 函数的参数</p>
+<p>在抽象语法树中的每个节点都标注了其对应源码中的位置.<br>可以查看 Clang 8 documentation 的 Clang AST简介<br><a href="http://clang.llvm.org/docs/IntroductionToTheClangAST.html" target="_blank" rel="noopener">http://clang.llvm.org/docs/IntroductionToTheClangAST.html</a></p>
+<p>一旦编译器把源码生成了抽象语法树，编译器可以对这棵树做静态分析.如果你把 clang 的代码仓库 clone 到本地，然后进入目录 <code>lib/StaticAnalyzer/Checkers</code>，你会看到所有静态检查内容.</p>
+<p><strong>IR 代码生成 (CodeGen)</strong><br>完成这些步骤后就可以开始IR中间代码的生成了.<br>IR 是 Frontend(前端) 的输出，也是 Backerend（后端） 的输入，桥接前后端。</p>
+<p>LLVM IR 有三种表示格式(本质上是一样的)</p>
+<ul>
+<li>文本格式，便于阅读，类似于汇编语言，扩展名 <code>.ll</code> 。<code>$ clang -S -fobjc-arc -emit-llvm main.m</code></li>
+<li>bitcode 格式，二进制格式,便于存储，扩展名 <code>.bc</code> 。 <code>$ clang -c -fobjc-arc -emit-llvm main.m</code></li>
+<li>内存格式.</li>
+</ul>
+<p>对clang 命令参数的简单说明<br><code>-fobjc-arc</code> : 为OC对象生成retain和release的调用<br><code>-emit-llvm</code> :使用LLVM描述汇编和对象文件<br><code>-S</code> :只运行预处理和编译步骤<br><code>-c</code> :只运行预处理,编译和汇编步骤</p>
+<p>看一个 IR 的简单例子，<br>main.m 文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> c = a + b <span class="number">-4</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行命令 <code>clang -S -fobjc-arc -emit-llvm main.m -o main.ll</code></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/klugjo/hexo-theme-clean-blog" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 christian_smile<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
